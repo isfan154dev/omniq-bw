@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+﻿import { Link } from 'react-router-dom'
 import { useLanguage } from '../context/LanguageContext'
 
 export default function NotFound() {
@@ -28,7 +28,7 @@ export default function NotFound() {
           transform: 'translate(-50%, -50%)',
           width: '70vw',
           height: '70vh',
-          background: 'radial-gradient(ellipse, rgba(123,47,255,0.08) 0%, rgba(255,45,85,0.04) 40%, transparent 70%)',
+          background: 'radial-gradient(ellipse, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0.04) 40%, transparent 70%)',
           pointerEvents: 'none',
         }}
       />
@@ -41,7 +41,7 @@ export default function NotFound() {
           left: 0,
           right: 0,
           height: '1px',
-          background: 'linear-gradient(90deg, transparent, rgba(255,45,85,0.15), transparent)',
+          background: 'linear-gradient(90deg, transparent, rgba(0,0,0,0.15), transparent)',
           pointerEvents: 'none',
         }}
       />
@@ -52,7 +52,7 @@ export default function NotFound() {
           left: 0,
           right: 0,
           height: '1px',
-          background: 'linear-gradient(90deg, transparent, rgba(123,47,255,0.15), transparent)',
+          background: 'linear-gradient(90deg, transparent, rgba(0,0,0,0.15), transparent)',
           pointerEvents: 'none',
         }}
       />
@@ -70,8 +70,8 @@ export default function NotFound() {
             fontSize: 'clamp(6rem, 20vw, 14rem)',
             lineHeight: 1,
             marginBottom: 8,
-            color: '#ff2d55',
-            textShadow: '0 0 30px rgba(255,45,85,0.6), 0 0 60px rgba(255,45,85,0.3)',
+            color: '#0a0a0a',
+            textShadow: 'none',
             letterSpacing: '-0.02em',
             userSelect: 'none',
           }}
@@ -86,7 +86,7 @@ export default function NotFound() {
             fontWeight: 900,
             fontSize: 'clamp(1.4rem, 4vw, 2.8rem)',
             letterSpacing: '0.25em',
-            background: 'linear-gradient(135deg, #ffffff 0%, #e8eaf6 50%, #00d4ff 100%)',
+            background: 'linear-gradient(135deg, #ffffff 0%, #efefed 50%, #0a0a0a 100%)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
             backgroundClip: 'text',
@@ -103,12 +103,12 @@ export default function NotFound() {
             fontFamily: 'Share Tech Mono, monospace',
             fontSize: '0.7rem',
             letterSpacing: '0.2em',
-            color: '#ff2d55',
+            color: '#0a0a0a',
             marginBottom: 12,
             opacity: 0.8,
           }}
         >
-          ERROR_CODE: 0x404 · ROUTE_NOT_FOUND · TIMESTAMP: {new Date().toISOString().slice(0, 19)}Z
+          ERROR_CODE: 0x404 В· ROUTE_NOT_FOUND В· TIMESTAMP: {new Date().toISOString().slice(0, 19)}Z
         </div>
 
         <p
@@ -135,7 +135,7 @@ export default function NotFound() {
 
         {/* CTA */}
         <Link to="/" className="btn-primary" style={{ fontSize: '0.78rem', padding: '13px 36px' }}>
-          <span>◈</span> {t('nav_home')}
+          <span>в—€</span> {t('nav_home')}
         </Link>
 
         {/* Bottom terminal line */}
@@ -149,7 +149,7 @@ export default function NotFound() {
             opacity: 0.5,
           }}
         >
-          OMNIQ DECISION INTELLIGENCE · SOVEREIGN PLATFORM · v2.4
+          OMNIQ DECISION INTELLIGENCE В· SOVEREIGN PLATFORM В· v2.4
         </div>
       </div>
 
@@ -171,14 +171,14 @@ export default function NotFound() {
         }
 
         .glitch-404::before {
-          color: #00d4ff;
+          color: #0a0a0a;
           animation: glitch404-before 4s ease-in-out infinite;
           clip-path: polygon(0 30%, 100% 30%, 100% 50%, 0 50%);
           opacity: 0;
         }
 
         .glitch-404::after {
-          color: #7b2fff;
+          color: #2a2a2a;
           animation: glitch404-after 4s ease-in-out infinite;
           clip-path: polygon(0 55%, 100% 55%, 100% 75%, 0 75%);
           opacity: 0;
@@ -210,3 +210,5 @@ export default function NotFound() {
     </div>
   )
 }
+
+

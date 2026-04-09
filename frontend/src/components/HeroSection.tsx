@@ -12,7 +12,7 @@ interface Particle {
   color: string
 }
 
-const COLORS = ['#00d4ff', '#7b2fff', '#00ff88', '#00d4ff']
+const COLORS = ['#0a0a0a', '#2a2a2a', '#3a3a3a', '#0a0a0a']
 
 export default function HeroSection() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -90,7 +90,7 @@ export default function HeroSection() {
             ctx.beginPath()
             ctx.moveTo(particles[i].x, particles[i].y)
             ctx.lineTo(particles[j].x, particles[j].y)
-            ctx.strokeStyle = `rgba(0, 212, 255, ${0.12 * (1 - dist / 100)})`
+            ctx.strokeStyle = `rgba(0, 0, 0, ${0.12 * (1 - dist / 100)})`
             ctx.lineWidth = 0.5
             ctx.stroke()
           }
@@ -115,7 +115,7 @@ export default function HeroSection() {
         display: 'flex',
         alignItems: 'center',
         overflow: 'hidden',
-        background: 'linear-gradient(135deg, #050508 0%, #08081a 50%, #050508 100%)',
+        background: '#ffffff',
       }}
     >
       <canvas
@@ -139,7 +139,7 @@ export default function HeroSection() {
           transform: 'translate(-50%, -50%)',
           width: '80vw',
           height: '80vh',
-          background: 'radial-gradient(ellipse at center, rgba(123, 47, 255, 0.08) 0%, rgba(0, 212, 255, 0.04) 40%, transparent 70%)',
+          background: 'radial-gradient(ellipse at center, rgba(0, 0, 0, 0.08) 0%, rgba(0, 0, 0, 0.04) 40%, transparent 70%)',
           pointerEvents: 'none',
         }}
       />
@@ -151,7 +151,7 @@ export default function HeroSection() {
           left: 0,
           right: 0,
           height: '1px',
-          background: 'linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.15), transparent)',
+          background: 'linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.15), transparent)',
         }}
       />
       <div
@@ -161,7 +161,7 @@ export default function HeroSection() {
           left: 0,
           right: 0,
           height: '1px',
-          background: 'linear-gradient(90deg, transparent, rgba(123, 47, 255, 0.15), transparent)',
+          background: 'linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.15), transparent)',
         }}
       />
 
@@ -187,9 +187,9 @@ export default function HeroSection() {
                 textTransform: 'uppercase',
                 color: 'var(--accent-cyan)',
                 padding: '4px 12px',
-                border: '1px solid rgba(0, 212, 255, 0.3)',
+                border: '1px solid rgba(0, 0, 0, 0.3)',
                 borderRadius: 'var(--radius-pill)',
-                background: 'rgba(0, 212, 255, 0.05)',
+                background: 'rgba(0, 0, 0, 0.05)',
               }}
             >
               {t('hero_label')}
@@ -199,7 +199,7 @@ export default function HeroSection() {
                 fontFamily: 'Share Tech Mono, monospace',
                 fontSize: '0.65rem',
                 letterSpacing: '0.15em',
-                color: 'var(--accent-green)',
+                color: 'var(--accent-teal)',
               }}
             >
               v2.4 ACTIVE
@@ -223,10 +223,8 @@ export default function HeroSection() {
             <span
               style={{
                 display: 'block',
-                background: 'linear-gradient(135deg, #ffffff 0%, #e8eaf6 40%, #00d4ff 100%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text',
+                color: '#0a0a0a',
+                fontWeight: 700,
               }}
             >
               {t('hero_line1')}
@@ -234,11 +232,9 @@ export default function HeroSection() {
             <span
               style={{
                 display: 'block',
-                background: 'linear-gradient(135deg, #7b2fff 0%, #00d4ff 60%, #00ff88 100%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text',
-                textShadow: 'none',
+                color: 'transparent',
+                WebkitTextStroke: '1px #d4d4d0',
+                fontWeight: 700,
               }}
             >
               {t('hero_line2')}
@@ -308,7 +304,7 @@ export default function HeroSection() {
                     fontWeight: 900,
                     fontSize: 'clamp(1.4rem, 2.5vw, 1.8rem)',
                     color: 'var(--accent-cyan)',
-                    textShadow: 'var(--neon-cyan)',
+                    textShadow: 'none',
                     lineHeight: 1.1,
                     marginBottom: 4,
                   }}

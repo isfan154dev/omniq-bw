@@ -24,27 +24,48 @@ export default function Register() {
     }
   }
 
+  const inputStyle: React.CSSProperties = {
+    width: '100%',
+    background: '#ffffff',
+    border: '1px solid #d4d4d0',
+    borderRadius: 8,
+    padding: '12px 14px',
+    color: '#0a0a0a',
+    fontFamily: 'Inter, sans-serif',
+    fontSize: '0.92rem',
+    boxSizing: 'border-box',
+  }
+
   return (
-    <div style={{ minHeight: '100vh', display: 'grid', placeItems: 'center', background: 'var(--bg-primary)', paddingTop: 90, paddingBottom: 40 }}>
-      <div style={{ width: '100%', maxWidth: 460, background: 'var(--bg-card)', border: '1px solid rgba(46,174,232,0.14)', borderRadius: 14, padding: 28, boxShadow: '0 20px 60px rgba(0,0,0,0.35)' }}>
+    <div style={{ minHeight: '100vh', display: 'grid', placeItems: 'center', background: '#ffffff', paddingTop: 90, paddingBottom: 40 }}>
+      <style>{`.auth-input::placeholder{color:#8a8a8a}`}</style>
+      <div style={{ width: '100%', maxWidth: 460, background: '#ffffff', border: '1px solid #d4d4d0', borderRadius: 14, padding: 28, boxShadow: '0 12px 30px rgba(0,0,0,0.08)' }}>
         <div style={{ marginBottom: 18 }}>
-          <div style={{ fontFamily: 'Share Tech Mono, monospace', fontSize: '0.62rem', color: '#2EAEE8', letterSpacing: '0.18em', marginBottom: 8 }}>OMNIQ AUTH</div>
-          <h1 style={{ fontFamily: 'Orbitron, monospace', fontSize: '1.5rem', color: '#E8EDF5', margin: 0 }}>Регистрация</h1>
+          <div style={{ fontFamily: 'Share Tech Mono, monospace', fontSize: '0.62rem', color: '#0a0a0a', letterSpacing: '0.18em', marginBottom: 8 }}>OMNIQ AUTH</div>
+          <h1 style={{ fontFamily: 'Orbitron, monospace', fontSize: '1.5rem', color: '#0a0a0a', margin: 0 }}>Р РµРіРёСЃС‚СЂР°С†РёСЏ</h1>
         </div>
         <form onSubmit={handleSubmit}>
           <div style={{ display: 'grid', gap: 14 }}>
-            <input value={username} onChange={e => setUsername(e.target.value)} placeholder="Username" style={{ width: '100%', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(46,174,232,0.16)', borderRadius: 8, padding: '12px 14px', color: '#E8EDF5', fontFamily: 'Inter, sans-serif', fontSize: '0.92rem', boxSizing: 'border-box' }} />
-            <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="Email" style={{ width: '100%', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(46,174,232,0.16)', borderRadius: 8, padding: '12px 14px', color: '#E8EDF5', fontFamily: 'Inter, sans-serif', fontSize: '0.92rem', boxSizing: 'border-box' }} />
-            <input type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="Password" style={{ width: '100%', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(46,174,232,0.16)', borderRadius: 8, padding: '12px 14px', color: '#E8EDF5', fontFamily: 'Inter, sans-serif', fontSize: '0.92rem', boxSizing: 'border-box' }} />
-            <input value={company} onChange={e => setCompany(e.target.value)} placeholder="Company" style={{ width: '100%', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(46,174,232,0.16)', borderRadius: 8, padding: '12px 14px', color: '#E8EDF5', fontFamily: 'Inter, sans-serif', fontSize: '0.92rem', boxSizing: 'border-box' }} />
+            <input className="auth-input" value={username} onChange={e => setUsername(e.target.value)} placeholder="Username" style={inputStyle} />
+            <input className="auth-input" type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="Email" style={inputStyle} />
+            <input className="auth-input" type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="Password" style={inputStyle} />
+            <input className="auth-input" value={company} onChange={e => setCompany(e.target.value)} placeholder="Company" style={inputStyle} />
           </div>
-          {error && <div style={{ marginTop: 12, padding: '10px 12px', borderRadius: 8, background: 'rgba(217,64,64,0.1)', border: '1px solid rgba(217,64,64,0.2)', color: '#F3B3B3', fontSize: '0.82rem' }}>{error}</div>}
-          <button type="submit" disabled={isLoading} style={{ width: '100%', marginTop: 16, padding: '12px 14px', borderRadius: 8, border: '1px solid rgba(46,174,232,0.24)', background: 'linear-gradient(135deg, #1A6DB5, #2EAEE8)', color: '#fff', fontFamily: 'Orbitron, monospace', fontSize: '0.72rem', letterSpacing: '0.12em', cursor: isLoading ? 'wait' : 'pointer' }}>
-            {isLoading ? 'CREATING ACCOUNT...' : 'СОЗДАТЬ АККАУНТ'}
+          {error && <div style={{ marginTop: 12, padding: '10px 12px', borderRadius: 8, background: 'rgba(0,0,0,0.06)', border: '1px solid rgba(0,0,0,0.12)', color: '#0a0a0a', fontSize: '0.82rem' }}>{error}</div>}
+          <button type="submit" disabled={isLoading} style={{ width: '100%', marginTop: 16, padding: '12px 14px', borderRadius: 8, border: '1px solid #0a0a0a', background: '#0a0a0a', color: '#ffffff', fontFamily: 'Orbitron, monospace', fontSize: '0.72rem', letterSpacing: '0.12em', cursor: isLoading ? 'wait' : 'pointer' }}>
+            {isLoading ? 'CREATING ACCOUNT...' : 'РЎРћР—Р”РђРўР¬ РђРљРљРђРЈРќРў'}
           </button>
         </form>
-        <div style={{ marginTop: 16, color: '#8A9BBF', fontSize: '0.82rem' }}>
-          Уже есть аккаунт? <Link to="/login" style={{ color: '#2EAEE8', textDecoration: 'none' }}>Войти</Link>
+        <div style={{ marginTop: 16, color: '#3a3a3a', fontSize: '0.82rem' }}>
+          РЈР¶Рµ РµСЃС‚СЊ Р°РєРєР°СѓРЅС‚?{' '}
+          <Link
+            to="/login"
+            style={{ color: '#0a0a0a', textDecoration: 'none' }}
+            onMouseEnter={e => { e.currentTarget.style.textDecoration = 'underline' }}
+            onMouseLeave={e => { e.currentTarget.style.textDecoration = 'none' }}
+          >
+            Р’РѕР№С‚Рё
+          </Link>
         </div>
       </div>
     </div>

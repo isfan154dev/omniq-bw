@@ -68,7 +68,7 @@ export default function MetricCard({
     const b = parseInt(hex.slice(5, 7), 16)
     return `${r}, ${g}, ${b}`
   }
-  const rgb = isHex ? rgbFromHex(color) : '0, 212, 255'
+  const rgb = isHex ? rgbFromHex(color) : '0, 0, 0'
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -85,8 +85,8 @@ export default function MetricCard({
   }, [visible, start])
 
   const trendColor =
-    trend === 'up' ? '#00ff88'
-    : trend === 'down' ? '#ff2d55'
+    trend === 'up' ? '#3a3a3a'
+    : trend === 'down' ? '#0a0a0a'
     : 'var(--text-muted)'
 
   const trendIcon = trend === 'up' ? '↑' : trend === 'down' ? '↓' : '—'
@@ -115,7 +115,6 @@ export default function MetricCard({
           right: '10%',
           height: '2px',
           background: `linear-gradient(90deg, transparent, ${color}, transparent)`,
-          boxShadow: `0 0 8px rgba(${rgb}, 0.5)`,
         }}
       />
 
@@ -141,7 +140,6 @@ export default function MetricCard({
           lineHeight: 1.1,
           marginBottom: 8,
           color: color,
-          textShadow: `0 0 20px rgba(${rgb}, 0.5)`,
           letterSpacing: '-0.02em',
         }}
       >

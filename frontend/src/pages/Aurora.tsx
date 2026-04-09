@@ -36,16 +36,16 @@ const CustomTooltip = ({ active, payload, label }: {
     <div
       style={{
         background: 'var(--bg-card)',
-        border: '1px solid rgba(0,255,136,0.3)',
+        border: '1px solid rgba(0,0,0,0.3)',
         borderRadius: 8,
         padding: '10px 14px',
         fontFamily: 'Share Tech Mono, monospace',
         fontSize: '0.72rem',
         color: 'var(--text-secondary)',
-        boxShadow: '0 4px 20px rgba(0,0,0,0.4)',
+        boxShadow: '0 8px 24px rgba(0,0,0,0.10)',
       }}
     >
-      <div style={{ color: 'var(--accent-green)', marginBottom: 6, letterSpacing: '0.1em' }}>{label}</div>
+      <div style={{ color: 'var(--accent-teal)', marginBottom: 6, letterSpacing: '0.1em' }}>{label}</div>
       {payload.map(p => (
         <div key={p.name} style={{ color: p.color, marginBottom: 2 }}>
           {p.name}: {p.value?.toFixed(1)}%
@@ -133,19 +133,19 @@ export default function Aurora() {
       title: t('aurora_uc1_title'),
       description: t('aurora_uc1_desc'),
       tags: ['GDP Forecasting', 'Inflation Modeling', 'FDI Analysis'],
-      color: '#00ff88',
+      color: '#3a3a3a',
     },
     {
       title: t('aurora_uc2_title'),
       description: t('aurora_uc2_desc'),
       tags: ['Budget Optimization', 'Impact Modeling', 'Priority Scoring'],
-      color: '#ffd700',
+      color: '#5a5a5a',
     },
     {
       title: t('aurora_uc3_title'),
       description: t('aurora_uc3_desc'),
       tags: ['Long-horizon Planning', 'Scenario Branching', 'Strategic Options'],
-      color: '#00d4ff',
+      color: '#0a0a0a',
     },
   ]
 
@@ -155,7 +155,7 @@ export default function Aurora() {
       <section
         className="page-hero"
         style={{
-          background: 'linear-gradient(135deg, #050508 0%, #051508 60%, #050508 100%)',
+          background: '#ffffff',
           position: 'relative',
           overflow: 'hidden',
         }}
@@ -167,7 +167,7 @@ export default function Aurora() {
             right: '-10%',
             width: '60vw',
             height: '60vh',
-            background: 'radial-gradient(ellipse, rgba(0,255,136,0.08) 0%, transparent 70%)',
+            background: 'radial-gradient(ellipse, rgba(0,0,0,0.08) 0%, transparent 70%)',
             pointerEvents: 'none',
           }}
         />
@@ -182,7 +182,7 @@ export default function Aurora() {
           <h1 className="page-hero-title">
             <span
               style={{
-                background: 'linear-gradient(135deg, #00ff88 0%, #00d4ff 100%)',
+                background: 'linear-gradient(135deg, #3a3a3a 0%, #0a0a0a 100%)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
                 backgroundClip: 'text',
@@ -199,10 +199,10 @@ export default function Aurora() {
           <p className="page-hero-subtitle">{t('aurora_hero_subtitle')}</p>
 
           <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap' }}>
-            <button onClick={openAccess} className="btn-primary" style={{ background: 'linear-gradient(135deg, #00ff88, #00cc6a)', color: '#050508' }}>
+            <button onClick={openAccess} className="btn-primary" style={{ background: '#0a0a0a', color: '#ffffff' }}>
               {t('aurora_btn_access')}
             </button>
-            <button onClick={openAccess} className="btn-ghost" style={{ color: 'var(--accent-green)', borderColor: 'var(--accent-green)' }}>
+            <button onClick={openAccess} className="btn-ghost" style={{ color: '#0a0a0a', borderColor: '#d4d4d0' }}>
               {t('aurora_btn_docs')}
             </button>
           </div>
@@ -225,7 +225,7 @@ export default function Aurora() {
           <div
             style={{
               background: 'var(--bg-card)',
-              border: '1px solid rgba(0,255,136,0.2)',
+              border: '1px solid rgba(0,0,0,0.2)',
               borderRadius: 'var(--radius-xl)',
               overflow: 'hidden',
             }}
@@ -241,15 +241,15 @@ export default function Aurora() {
                 flexWrap: 'wrap',
               }}
             >
-              <span className="status-dot" style={{ background: 'var(--accent-green)' }} />
-              <span style={{ fontFamily: 'Share Tech Mono, monospace', fontSize: '0.72rem', color: 'var(--accent-green)', letterSpacing: '0.1em' }}>
+              <span className="status-dot" />
+              <span style={{ fontFamily: 'Share Tech Mono, monospace', fontSize: '0.72rem', color: '#0a0a0a', letterSpacing: '0.1em' }}>
                 AURORA FORECAST ENGINE v2.4
               </span>
               <div style={{ marginLeft: 'auto', display: 'flex', gap: 12 }}>
                 {[
-                  { color: '#00ff88', label: t('aurora_legend_actual') },
-                  { color: '#ffd700', label: t('aurora_legend_forecast') },
-                  { color: 'rgba(0,255,136,0.2)', label: t('aurora_legend_band') },
+                  { color: '#3a3a3a', label: t('aurora_legend_actual') },
+                  { color: '#5a5a5a', label: t('aurora_legend_forecast') },
+                  { color: 'rgba(0,0,0,0.2)', label: t('aurora_legend_band') },
                 ].map(item => (
                   <div key={item.label} style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
                     <div style={{ width: 16, height: 3, background: item.color, borderRadius: 2 }} />
@@ -263,7 +263,7 @@ export default function Aurora() {
             <div style={{ padding: '24px 16px 16px', height: 320 }}>
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart data={FORECAST_DATA} margin={{ top: 8, right: 20, bottom: 0, left: -10 }}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.04)" vertical={false}/>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#e8e8e6" vertical={false}/>
                   <XAxis
                     dataKey="month"
                     tick={{ fill: 'var(--text-muted)', fontFamily: 'Share Tech Mono', fontSize: 11 }}
@@ -278,24 +278,24 @@ export default function Aurora() {
                     tickFormatter={v => `${v}%`}
                   />
                   <Tooltip content={<CustomTooltip />} />
-                  <ReferenceLine x="Aug" stroke="rgba(255,255,255,0.12)" strokeDasharray="4 2" label={{ value: 'NOW', fill: 'var(--text-muted)', fontSize: 10, fontFamily: 'Share Tech Mono' }}/>
+                  <ReferenceLine x="Aug" stroke="#d4d4d0" strokeDasharray="4 2" label={{ value: 'NOW', fill: 'var(--text-muted)', fontSize: 10, fontFamily: 'Share Tech Mono' }}/>
 
-                  <Line dataKey="upper" stroke="rgba(0,255,136,0.15)" strokeWidth={0} dot={false} name="Upper bound" connectNulls />
-                  <Line dataKey="lower" stroke="rgba(0,255,136,0.15)" strokeWidth={0} dot={false} name="Lower bound" connectNulls />
+                  <Line dataKey="upper" stroke="rgba(0,0,0,0.15)" strokeWidth={0} dot={false} name="Upper bound" connectNulls />
+                  <Line dataKey="lower" stroke="rgba(0,0,0,0.15)" strokeWidth={0} dot={false} name="Lower bound" connectNulls />
                   <Line
                     dataKey="actual"
-                    stroke="#00ff88"
+                    stroke="#3a3a3a"
                     strokeWidth={2}
-                    dot={{ r: 3, fill: '#00ff88', strokeWidth: 0 }}
+                    dot={{ r: 3, fill: '#3a3a3a', strokeWidth: 0 }}
                     name={t('aurora_legend_actual')}
                     connectNulls
                   />
                   <Line
                     dataKey="forecast"
-                    stroke="#ffd700"
+                    stroke="#5a5a5a"
                     strokeWidth={2}
                     strokeDasharray="5 3"
-                    dot={{ r: 3, fill: '#ffd700', strokeWidth: 0 }}
+                    dot={{ r: 3, fill: '#5a5a5a', strokeWidth: 0 }}
                     name={t('aurora_legend_forecast')}
                     connectNulls
                   />
@@ -321,7 +321,7 @@ export default function Aurora() {
               ].map(s => (
                 <div key={s.label}>
                   <span style={{ fontFamily: 'Share Tech Mono, monospace', fontSize: '0.65rem', color: 'var(--text-muted)' }}>{s.label}: </span>
-                  <span style={{ fontFamily: 'Share Tech Mono, monospace', fontSize: '0.65rem', color: 'var(--accent-green)' }}>{s.value}</span>
+                  <span style={{ fontFamily: 'Share Tech Mono, monospace', fontSize: '0.65rem', color: '#0a0a0a' }}>{s.value}</span>
                 </div>
               ))}
             </div>
@@ -339,7 +339,7 @@ export default function Aurora() {
           <div className="feature-grid">
             {FEATURES.map(feat => (
               <div key={feat.title} className="feature-item">
-                <div className="feature-icon" style={{ background: 'rgba(0,255,136,0.08)', borderColor: 'rgba(0,255,136,0.25)', color: '#00ff88' }}>
+                <div className="feature-icon" style={{ background: 'rgba(0,0,0,0.08)', borderColor: 'rgba(0,0,0,0.25)', color: '#3a3a3a' }}>
                   {feat.icon}
                 </div>
                 <div className="feature-title">{feat.title}</div>
@@ -371,7 +371,7 @@ export default function Aurora() {
                     background: uc.color,
                     borderRadius: 3,
                     marginBottom: 20,
-                    boxShadow: `0 0 12px ${uc.color}`,
+                    boxShadow: 'none',
                   }}
                 />
                 <h4 style={{ fontFamily: 'Orbitron, monospace', fontSize: '0.9rem', letterSpacing: '0.05em', color: uc.color, marginBottom: 10 }}>

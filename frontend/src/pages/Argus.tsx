@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+﻿import { useCallback, useEffect, useRef, useState } from 'react'
 import { getToken } from '../api/client'
 
 type Company = {
@@ -54,7 +54,7 @@ type GraphResponse = {
 }
 
 const API_BASE_URL = import.meta.env.VITE_API_URL?.replace(/\/$/, '') ?? ''
-const DEFAULT_ERROR_MESSAGE = 'Не удалось загрузить данные ARGUS.'
+const DEFAULT_ERROR_MESSAGE = 'РќРµ СѓРґР°Р»РѕСЃСЊ Р·Р°РіСЂСѓР·РёС‚СЊ РґР°РЅРЅС‹Рµ ARGUS.'
 const POLL_INTERVAL_MS = 30000
 const FLASH_DURATION_MS = 1600
 
@@ -63,16 +63,16 @@ const HIGH_RISK_THRESHOLD = 40
 const MEDIUM_RISK_THRESHOLD = 20
 
 function riskColor(r: number) {
-  if (r >= CRITICAL_RISK_THRESHOLD) return '#D94040'
-  if (r >= HIGH_RISK_THRESHOLD) return '#E07B39'
-  if (r >= MEDIUM_RISK_THRESHOLD) return '#C9A84C'
-  return '#2EAEE8'
+  if (r >= CRITICAL_RISK_THRESHOLD) return '#0a0a0a'
+  if (r >= HIGH_RISK_THRESHOLD) return '#888888'
+  if (r >= MEDIUM_RISK_THRESHOLD) return '#5a5a5a'
+  return '#0a0a0a'
 }
 function riskLabel(r: number) {
-  if (r >= 70) return 'КРИТИЧНЫЙ'
-  if (r >= 40) return 'ВЫСОКИЙ'
-  if (r >= 20) return 'СРЕДНИЙ'
-  return 'НИЗКИЙ'
+  if (r >= 70) return 'РљР РРўРР§РќР«Р™'
+  if (r >= 40) return 'Р’Р«РЎРћРљРР™'
+  if (r >= 20) return 'РЎР Р•Р”РќРР™'
+  return 'РќРР—РљРР™'
 }
 function toNumber(value: unknown) {
   if (typeof value === 'number' && Number.isFinite(value)) return value
@@ -144,15 +144,15 @@ function normalizeCompanies(companyPayload: CompaniesResponse | null, graphPaylo
     companyMap.set(id, {
       id,
       name: company.name?.trim() || graphNode?.label?.trim() || id,
-      sector: company.sector?.trim() || graphNode?.sector?.trim() || graphNode?.industry?.trim() || 'Не указано',
-      city: company.city?.trim() || graphNode?.city?.trim() || 'Не указано',
+      sector: company.sector?.trim() || graphNode?.sector?.trim() || graphNode?.industry?.trim() || 'РќРµ СѓРєР°Р·Р°РЅРѕ',
+      city: company.city?.trim() || graphNode?.city?.trim() || 'РќРµ СѓРєР°Р·Р°РЅРѕ',
       revenue: toNumber(company.revenue ?? graphNode?.revenue),
       employees: toNumber(company.employees ?? graphNode?.employees),
       risk: toNumber(company.risk ?? graphNode?.risk_score),
       founded: toNumber(company.founded ?? graphNode?.founded),
-      type: company.type?.trim() || graphNode?.type?.trim() || 'Не указано',
-      description: company.description?.trim() || 'Описание отсутствует',
-      director: company.director?.trim() || 'Не указан',
+      type: company.type?.trim() || graphNode?.type?.trim() || 'РќРµ СѓРєР°Р·Р°РЅРѕ',
+      description: company.description?.trim() || 'РћРїРёСЃР°РЅРёРµ РѕС‚СЃСѓС‚СЃС‚РІСѓРµС‚',
+      director: company.director?.trim() || 'РќРµ СѓРєР°Р·Р°РЅ',
       connections: [...(connectionMap.get(id) ?? new Set())],
     })
   })
@@ -164,15 +164,15 @@ function normalizeCompanies(companyPayload: CompaniesResponse | null, graphPaylo
     companyMap.set(id, {
       id,
       name: node.label?.trim() || id,
-      sector: node.sector?.trim() || node.industry?.trim() || 'Не указано',
-      city: node.city?.trim() || 'Не указано',
+      sector: node.sector?.trim() || node.industry?.trim() || 'РќРµ СѓРєР°Р·Р°РЅРѕ',
+      city: node.city?.trim() || 'РќРµ СѓРєР°Р·Р°РЅРѕ',
       revenue: toNumber(node.revenue),
       employees: toNumber(node.employees),
       risk: toNumber(node.risk_score),
       founded: toNumber(node.founded),
-      type: node.type?.trim() || 'Не указано',
-      description: 'Описание отсутствует',
-      director: 'Не указан',
+      type: node.type?.trim() || 'РќРµ СѓРєР°Р·Р°РЅРѕ',
+      description: 'РћРїРёСЃР°РЅРёРµ РѕС‚СЃСѓС‚СЃС‚РІСѓРµС‚',
+      director: 'РќРµ СѓРєР°Р·Р°РЅ',
       connections: [...(connectionMap.get(id) ?? new Set())],
     })
   })
@@ -189,8 +189,8 @@ function getRiskChanges(previousCompanies: Company[], nextCompanies: Company[]):
 
 export default function Argus() {
   const [search, setSearch] = useState('')
-  const [industryFilter, setIndustryFilter] = useState('Все')
-  const [riskFilter, setRiskFilter] = useState('Все')
+  const [industryFilter, setIndustryFilter] = useState('Р’СЃРµ')
+  const [riskFilter, setRiskFilter] = useState('Р’СЃРµ')
   const [selected, setSelected] = useState<string | null>(null)
   const [sortField, setSortField] = useState<'name'|'risk'|'revenue'>('risk')
   const [sortDir, setSortDir] = useState<'asc'|'desc'>('desc')
@@ -327,15 +327,15 @@ export default function Argus() {
   }, [])
 
   const COMPANIES = companies
-  const INDUSTRIES = ['Все', ...[...new Set(COMPANIES.map(company => company.sector).filter(Boolean))].sort()]
+  const INDUSTRIES = ['Р’СЃРµ', ...[...new Set(COMPANIES.map(company => company.sector).filter(Boolean))].sort()]
 
   const filtered = COMPANIES.filter(c => {
     if (search && !c.name.toLowerCase().includes(search.toLowerCase()) && !c.sector.toLowerCase().includes(search.toLowerCase())) return false
-    if (industryFilter !== 'Все' && c.sector !== industryFilter) return false
-    if (riskFilter === 'КРИТИЧНЫЕ' && c.risk < 70) return false
-    if (riskFilter === 'ВЫСОКИЕ' && (c.risk < 40 || c.risk >= 70)) return false
-    if (riskFilter === 'СРЕДНИЕ' && (c.risk < 20 || c.risk >= 40)) return false
-    if (riskFilter === 'НИЗКИЕ' && c.risk >= 20) return false
+    if (industryFilter !== 'Р’СЃРµ' && c.sector !== industryFilter) return false
+    if (riskFilter === 'РљР РРўРР§РќР«Р•' && c.risk < 70) return false
+    if (riskFilter === 'Р’Р«РЎРћРљРР•' && (c.risk < 40 || c.risk >= 70)) return false
+    if (riskFilter === 'РЎР Р•Р”РќРР•' && (c.risk < 20 || c.risk >= 40)) return false
+    if (riskFilter === 'РќРР—РљРР•' && c.risk >= 20) return false
     return true
   }).sort((a, b) => {
     const mul = sortDir === 'asc' ? 1 : -1
@@ -353,8 +353,8 @@ export default function Argus() {
   const liveStatusLabel = lastUpdatedAt === null ? 'Waiting for live data' : `Last updated: ${secondsSinceUpdate} seconds ago`
 
   const inputStyle: React.CSSProperties = {
-    background: 'rgba(46,174,232,0.05)', border: '1px solid rgba(46,174,232,0.15)',
-    borderRadius: 6, padding: '8px 12px', color: '#E8EDF5',
+    background: 'rgba(0,0,0,0.05)', border: '1px solid rgba(0,0,0,0.15)',
+    borderRadius: 6, padding: '8px 12px', color: '#0a0a0a',
     fontFamily: 'Inter, sans-serif', fontSize: '0.82rem', outline: 'none', cursor: 'pointer',
   }
 
@@ -392,57 +392,57 @@ export default function Argus() {
       <div style={{ maxWidth: 1400, margin: '0 auto', padding: '0 24px' }}>
         <style>{`
           @keyframes argus-live-pulse {
-            0% { opacity: 0.45; transform: scale(0.92); box-shadow: 0 0 0 0 rgba(76, 201, 91, 0.55); }
-            70% { opacity: 1; transform: scale(1); box-shadow: 0 0 0 10px rgba(76, 201, 91, 0); }
-            100% { opacity: 0.6; transform: scale(0.95); box-shadow: 0 0 0 0 rgba(76, 201, 91, 0); }
+            0% { opacity: 0.4; }
+            70% { opacity: 1; }
+            100% { opacity: 0.6; }
           }
           @keyframes argus-row-flash {
-            0% { background: rgba(76, 201, 91, 0.22); box-shadow: inset 0 0 0 1px rgba(76, 201, 91, 0.35); }
-            100% { background: transparent; box-shadow: inset 0 0 0 1px rgba(76, 201, 91, 0); }
+            0% { background: rgba(0, 0, 0, 0.22); box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.35); }
+            100% { background: transparent; box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0); }
           }
         `}</style>
 
-        <div style={{ padding: '28px 0 20px', borderBottom: '1px solid rgba(46,174,232,0.1)' }}>
+        <div style={{ padding: '28px 0 20px', borderBottom: '1px solid rgba(0,0,0,0.1)' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 6 }}>
             <span className="status-dot" />
-            <span style={{ fontFamily: 'Share Tech Mono, monospace', fontSize: '0.6rem', color: '#2EAEE8', letterSpacing: '0.18em' }}>ARGUS — ENTERPRISE GRAPH ANALYTICS</span>
+            <span style={{ fontFamily: 'Share Tech Mono, monospace', fontSize: '0.6rem', color: '#0a0a0a', letterSpacing: '0.18em' }}>ARGUS вЂ” ENTERPRISE GRAPH ANALYTICS</span>
           </div>
           <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', flexWrap: 'wrap', gap: 16 }}>
-            <h1 style={{ fontFamily: 'Orbitron, monospace', fontWeight: 900, fontSize: '1.6rem', color: '#E8EDF5', letterSpacing: '0.06em' }}>КОРПОРАТИВНЫЙ ГРАФ</h1>
+            <h1 style={{ fontFamily: 'Orbitron, monospace', fontWeight: 900, fontSize: '1.6rem', color: '#0a0a0a', letterSpacing: '0.06em' }}>РљРћР РџРћР РђРўРР’РќР«Р™ Р“Р РђР¤</h1>
             <div style={{ display: 'flex', gap: 24 }}>
               {[
-                { label: 'КОМПАНИЙ', value: totalCompanies, color: '#2EAEE8' },
-                { label: 'АНОМАЛИИ', value: anomalyCount, color: '#D94040' },
-                { label: 'КРИТИЧНЫХ', value: criticalCount, color: '#D94040' },
+                { label: 'РљРћРњРџРђРќРР™', value: totalCompanies, color: '#0a0a0a' },
+                { label: 'РђРќРћРњРђР›РР', value: anomalyCount, color: '#0a0a0a' },
+                { label: 'РљР РРўРР§РќР«РҐ', value: criticalCount, color: '#0a0a0a' },
               ].map(s => (
                 <div key={s.label} style={{ textAlign: 'right' }}>
                   <div style={{ fontFamily: 'Orbitron, monospace', fontWeight: 900, fontSize: '1.4rem', color: s.color, transition: 'color 220ms ease, transform 220ms ease, opacity 220ms ease' }}>{s.value}</div>
-                  <div style={{ fontFamily: 'Share Tech Mono, monospace', fontSize: '0.52rem', color: '#526080', letterSpacing: '0.1em' }}>{s.label}</div>
+                  <div style={{ fontFamily: 'Share Tech Mono, monospace', fontSize: '0.52rem', color: '#8a8a8a', letterSpacing: '0.1em' }}>{s.label}</div>
                 </div>
               ))}
             </div>
           </div>
         </div>
 
-        <div style={{ position: 'absolute', right: 32, top: 88, display: 'flex', alignItems: 'center', gap: 10, padding: '8px 12px', borderRadius: 999, background: 'rgba(9,16,29,0.88)', border: '1px solid rgba(76,201,91,0.2)', boxShadow: '0 10px 30px rgba(0,0,0,0.25)' }}>
+        <div style={{ position: 'absolute', right: 32, top: 88, display: 'flex', alignItems: 'center', gap: 10, padding: '8px 12px', borderRadius: 999, background: '#f5f5f3', border: '1px solid #d4d4d0' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-            <span style={{ width: 8, height: 8, borderRadius: '50%', background: '#4CC95B', animation: 'argus-live-pulse 1.8s ease-in-out infinite' }} />
-            <span style={{ fontFamily: 'Share Tech Mono, monospace', fontSize: '0.62rem', color: '#4CC95B', letterSpacing: '0.14em' }}>LIVE</span>
+            <span style={{ width: 8, height: 8, borderRadius: '50%', background: '#0a0a0a', animation: 'argus-live-pulse 1.8s ease-in-out infinite' }} />
+            <span style={{ fontFamily: 'Share Tech Mono, monospace', fontSize: '0.62rem', color: '#0a0a0a', letterSpacing: '0.14em' }}>LIVE</span>
           </div>
-          <span style={{ fontFamily: 'Share Tech Mono, monospace', fontSize: '0.58rem', color: '#8A9BBF', letterSpacing: '0.06em' }}>{liveStatusLabel}</span>
+          <span style={{ fontFamily: 'Share Tech Mono, monospace', fontSize: '0.58rem', color: '#3a3a3a', letterSpacing: '0.06em' }}>{liveStatusLabel}</span>
         </div>
 
-        <div style={{ display: 'flex', gap: 0, margin: '16px 0 0', border: '1px solid rgba(46,174,232,0.12)', borderRadius: 7, overflow: 'hidden', width: 'fit-content' }}>
+        <div style={{ display: 'flex', gap: 0, margin: '16px 0 0', border: '1px solid rgba(0,0,0,0.12)', borderRadius: 7, overflow: 'hidden', width: 'fit-content' }}>
           {(['table','graph'] as const).map(t => (
-            <button key={t} onClick={() => setViewTab(t)} style={{ padding: '9px 24px', fontFamily: 'Share Tech Mono, monospace', fontSize: '0.68rem', letterSpacing: '0.1em', cursor: 'pointer', border: 'none', transition: 'all 180ms', background: viewTab === t ? 'rgba(46,174,232,0.12)' : 'transparent', color: viewTab === t ? '#2EAEE8' : '#526080' }}>
-              {t === 'table' ? '≡ ТАБЛИЦА' : '◎ ГРАФ'}
+            <button key={t} onClick={() => setViewTab(t)} style={{ padding: '9px 24px', fontFamily: 'Share Tech Mono, monospace', fontSize: '0.68rem', letterSpacing: '0.1em', cursor: 'pointer', border: 'none', transition: 'all 180ms', background: viewTab === t ? 'rgba(0,0,0,0.12)' : 'transparent', color: viewTab === t ? '#0a0a0a' : '#8a8a8a' }}>
+              {t === 'table' ? 'в‰Ў РўРђР‘Р›РР¦Рђ' : 'в—Ћ Р“Р РђР¤'}
             </button>
           ))}
         </div>
 
         {loading && (
-          <div style={{ marginTop: 16, padding: '12px 14px', borderRadius: 8, border: '1px solid rgba(46,174,232,0.18)', background: 'rgba(46,174,232,0.06)', color: '#2EAEE8', fontFamily: 'Share Tech Mono, monospace', fontSize: '0.64rem', letterSpacing: '0.08em' }}>
-            ЗАГРУЗКА ДАННЫХ ARGUS...
+          <div style={{ marginTop: 16, padding: '12px 14px', borderRadius: 8, border: '1px solid rgba(0,0,0,0.18)', background: 'rgba(0,0,0,0.06)', color: '#0a0a0a', fontFamily: 'Share Tech Mono, monospace', fontSize: '0.64rem', letterSpacing: '0.08em' }}>
+            Р—РђР“Р РЈР—РљРђ Р”РђРќРќР«РҐ ARGUS...
           </div>
         )}
 
@@ -450,20 +450,20 @@ export default function Argus() {
           <div style={{ marginTop: 16, display: 'flex', justifyContent: 'space-between', gap: 12, alignItems: 'center', padding: '12px 14px', borderRadius: 8, border: '1px solid rgba(217,64,64,0.28)', background: 'rgba(217,64,64,0.08)' }}>
             <span style={{ color: '#F3B3B3', fontFamily: 'Inter, sans-serif', fontSize: '0.8rem' }}>{error}</span>
             <button onClick={() => setReloadKey(key => key + 1)} style={{ background: 'rgba(217,64,64,0.12)', color: '#FFD8D8', border: '1px solid rgba(217,64,64,0.3)', borderRadius: 6, padding: '7px 12px', cursor: 'pointer', fontFamily: 'Share Tech Mono, monospace', fontSize: '0.58rem', letterSpacing: '0.08em', flexShrink: 0 }}>
-              ПОВТОРИТЬ
+              РџРћР’РўРћР РРўР¬
             </button>
           </div>
         )}
 
         {viewTab === 'table' && <div style={{ display: 'flex', gap: 10, padding: '16px 0', flexWrap: 'wrap', alignItems: 'center' }}>
-          <input type="text" placeholder="Поиск компании..." value={search} onChange={e => setSearch(e.target.value)} style={{ ...inputStyle, flex: '1 1 220px', minWidth: 180 }} />
+          <input type="text" placeholder="РџРѕРёСЃРє РєРѕРјРїР°РЅРёРё..." value={search} onChange={e => setSearch(e.target.value)} style={{ ...inputStyle, flex: '1 1 220px', minWidth: 180 }} />
           <select value={industryFilter} onChange={e => setIndustryFilter(e.target.value)} style={{ ...inputStyle, flex: '0 0 auto' }}>
             {INDUSTRIES.map(i => <option key={i} value={i}>{i}</option>)}
           </select>
           <select value={riskFilter} onChange={e => setRiskFilter(e.target.value)} style={{ ...inputStyle, flex: '0 0 auto' }}>
-            {['Все','КРИТИЧНЫЕ','ВЫСОКИЕ','СРЕДНИЕ','НИЗКИЕ'].map(r => <option key={r} value={r}>{r}</option>)}
+            {['Р’СЃРµ','РљР РРўРР§РќР«Р•','Р’Р«РЎРћРљРР•','РЎР Р•Р”РќРР•','РќРР—РљРР•'].map(r => <option key={r} value={r}>{r}</option>)}
           </select>
-          <span style={{ fontFamily: 'Share Tech Mono, monospace', fontSize: '0.6rem', color: '#526080', marginLeft: 'auto' }}>{filtered.length} / {COMPANIES.length} записей</span>
+          <span style={{ fontFamily: 'Share Tech Mono, monospace', fontSize: '0.6rem', color: '#8a8a8a', marginLeft: 'auto' }}>{filtered.length} / {COMPANIES.length} Р·Р°РїРёСЃРµР№</span>
         </div>}
 
         {viewTab === 'graph' && (() => {
@@ -471,16 +471,16 @@ export default function Argus() {
           const vbW = 900, vbH = 560, cx = vbW / 2, cy = vbH / 2
           return (
             <div style={{ display: 'grid', gridTemplateColumns: selCo ? '1fr 320px' : '1fr', gap: 16, marginTop: 16, marginBottom: 32 }}>
-              <div style={{ background: 'var(--bg-card)', border: '1px solid rgba(46,174,232,0.1)', borderRadius: 8, overflow: 'hidden', position: 'relative' }}>
+              <div style={{ background: 'var(--bg-card)', border: '1px solid rgba(0,0,0,0.1)', borderRadius: 8, overflow: 'hidden', position: 'relative' }}>
                 {/* Legend */}
-                <div style={{ position: 'absolute', top: 12, left: 12, zIndex: 10, background: 'rgba(7,12,24,0.85)', border: '1px solid rgba(46,174,232,0.12)', borderRadius: 6, padding: '8px 12px' }}>
-                  {[['#2EAEE8','LOW < 20'],['#C9A84C','MED 20–40'],['#E07B39','HIGH 40–70'],['#D94040','CRIT 70+']].map(([c,l]) => (
+                <div style={{ position: 'absolute', top: 12, left: 12, zIndex: 10, background: '#ffffff', border: '1px solid rgba(0,0,0,0.12)', borderRadius: 6, padding: '8px 12px' }}>
+                  {[['#0a0a0a','LOW < 20'],['#5a5a5a','MED 20вЂ“40'],['#888888','HIGH 40вЂ“70'],['#0a0a0a','CRIT 70+']].map(([c,l]) => (
                     <div key={l} style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 4 }}>
                       <div style={{ width: 8, height: 8, borderRadius: '50%', background: c }} />
-                      <span style={{ fontFamily: 'Share Tech Mono, monospace', fontSize: '0.55rem', color: '#8A9BBF' }}>{l}</span>
+                      <span style={{ fontFamily: 'Share Tech Mono, monospace', fontSize: '0.55rem', color: '#3a3a3a' }}>{l}</span>
                     </div>
                   ))}
-                  <div style={{ marginTop: 6, fontFamily: 'Share Tech Mono, monospace', fontSize: '0.52rem', color: '#526080' }}>Scroll: zoom · Drag: move</div>
+                  <div style={{ marginTop: 6, fontFamily: 'Share Tech Mono, monospace', fontSize: '0.52rem', color: '#8a8a8a' }}>Scroll: zoom В· Drag: move</div>
                 </div>
                 <svg ref={svgRef} width="100%" viewBox={`0 0 ${vbW} ${vbH}`} style={{ display: 'block', cursor: dragId ? 'grabbing' : 'default' }}
                   onMouseMove={handleSvgMove} onMouseUp={handleSvgUp} onMouseLeave={handleSvgUp}
@@ -492,7 +492,7 @@ export default function Argus() {
                       if (!t || t.id < c.id) return null
                       const s = nodePos[c.id], e = nodePos[t.id]
                       if (!s || !e) return null
-                      return <line key={c.id+'-'+tid} x1={s.x} y1={s.y} x2={e.x} y2={e.y} stroke="rgba(46,174,232,0.2)" strokeWidth="1.5" />
+                      return <line key={c.id+'-'+tid} x1={s.x} y1={s.y} x2={e.x} y2={e.y} stroke="rgba(0,0,0,0.2)" strokeWidth="1.5" />
                     }))}
                     {/* Nodes */}
                     {COMPANIES.map(c => {
@@ -502,8 +502,8 @@ export default function Argus() {
                       const isSel = graphSelected === c.id
                       return (
                         <g key={c.id} onMouseDown={e => handleNodeDown(e, c.id)} style={{ cursor: 'grab' }}>
-                          <circle cx={p.x} cy={p.y} r={isSel ? 14 : 10} fill={col} opacity={0.9} stroke={isSel ? '#fff' : col} strokeWidth={isSel ? 2 : 1} filter={c.risk >= 70 ? `drop-shadow(0 0 6px ${col})` : undefined} />
-                          <text x={p.x} y={p.y + 22} textAnchor="middle" style={{ fontFamily: 'Inter, sans-serif', fontSize: 9, fill: '#8A9BBF', pointerEvents: 'none' }}>{c.name.slice(0, 14)}</text>
+                          <circle cx={p.x} cy={p.y} r={isSel ? 14 : 10} fill={col} opacity={0.9} stroke={isSel ? '#d4d4d0' : col} strokeWidth={isSel ? 2 : 1} />
+                          <text x={p.x} y={p.y + 22} textAnchor="middle" style={{ fontFamily: 'Inter, sans-serif', fontSize: 9, fill: '#3a3a3a', pointerEvents: 'none' }}>{c.name.slice(0, 14)}</text>
                         </g>
                       )
                     })}
@@ -511,35 +511,35 @@ export default function Argus() {
                 </svg>
               </div>
               {selCo && (
-                <div style={{ background: 'var(--bg-card)', border: '1px solid rgba(46,174,232,0.15)', borderRadius: 8, padding: 20, alignSelf: 'start' }}>
+                <div style={{ background: 'var(--bg-card)', border: '1px solid rgba(0,0,0,0.15)', borderRadius: 8, padding: 20, alignSelf: 'start' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 14 }}>
-                    <span style={{ fontFamily: 'Share Tech Mono, monospace', fontSize: '0.56rem', color: '#2EAEE8', letterSpacing: '0.15em' }}>ДОСЬЕ</span>
-                    <button onClick={() => setGraphSelected(null)} style={{ background: 'none', border: 'none', color: '#526080', cursor: 'pointer', fontSize: '1rem' }}>✕</button>
+                    <span style={{ fontFamily: 'Share Tech Mono, monospace', fontSize: '0.56rem', color: '#0a0a0a', letterSpacing: '0.15em' }}>Р”РћРЎР¬Р•</span>
+                    <button onClick={() => setGraphSelected(null)} style={{ background: 'none', border: 'none', color: '#8a8a8a', cursor: 'pointer', fontSize: '1rem' }}>вњ•</button>
                   </div>
-                  <h3 style={{ fontFamily: 'Inter, sans-serif', fontWeight: 700, fontSize: '1rem', color: '#E8EDF5', marginBottom: 4, lineHeight: 1.3 }}>{selCo.name}</h3>
-                  <div style={{ fontFamily: 'Share Tech Mono, monospace', fontSize: '0.58rem', color: '#526080', marginBottom: 14 }}>{selCo.city} · {selCo.type} · {selCo.founded}</div>
+                  <h3 style={{ fontFamily: 'Inter, sans-serif', fontWeight: 700, fontSize: '1rem', color: '#0a0a0a', marginBottom: 4, lineHeight: 1.3 }}>{selCo.name}</h3>
+                  <div style={{ fontFamily: 'Share Tech Mono, monospace', fontSize: '0.58rem', color: '#8a8a8a', marginBottom: 14 }}>{selCo.city} В· {selCo.type} В· {selCo.founded}</div>
                   <div style={{ background: riskColor(selCo.risk) + '12', border: '1px solid ' + riskColor(selCo.risk) + '30', borderRadius: 8, padding: '10px 12px', marginBottom: 12 }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
-                      <span style={{ fontFamily: 'Share Tech Mono, monospace', fontSize: '0.56rem', color: '#526080' }}>РИСК-ИНДЕКС</span>
+                      <span style={{ fontFamily: 'Share Tech Mono, monospace', fontSize: '0.56rem', color: '#8a8a8a' }}>Р РРЎРљ-РРќР”Р•РљРЎ</span>
                       <span style={{ fontFamily: 'Orbitron, monospace', fontWeight: 900, fontSize: '1.4rem', color: riskColor(selCo.risk) }}>{selCo.risk}</span>
                     </div>
-                    <div style={{ height: 5, background: 'rgba(255,255,255,0.06)', borderRadius: 3, overflow: 'hidden' }}>
+                    <div style={{ height: 5, background: 'rgba(0,0,0,0.08)', borderRadius: 3, overflow: 'hidden' }}>
                       <div style={{ width: selCo.risk + '%', height: '100%', background: riskColor(selCo.risk), borderRadius: 3 }} />
                     </div>
                   </div>
-                  <p style={{ fontFamily: 'Inter, sans-serif', fontSize: '0.8rem', color: '#8A9BBF', lineHeight: 1.5, marginBottom: 10 }}>{selCo.description}</p>
-                  <div style={{ fontFamily: 'Share Tech Mono, monospace', fontSize: '0.52rem', color: '#526080', marginBottom: 4 }}>ДИРЕКТОР</div>
-                  <div style={{ fontFamily: 'Inter, sans-serif', fontSize: '0.85rem', color: '#E8EDF5', marginBottom: 14 }}>{selCo.director}</div>
+                  <p style={{ fontFamily: 'Inter, sans-serif', fontSize: '0.8rem', color: '#3a3a3a', lineHeight: 1.5, marginBottom: 10 }}>{selCo.description}</p>
+                  <div style={{ fontFamily: 'Share Tech Mono, monospace', fontSize: '0.52rem', color: '#8a8a8a', marginBottom: 4 }}>Р”РР Р•РљРўРћР </div>
+                  <div style={{ fontFamily: 'Inter, sans-serif', fontSize: '0.85rem', color: '#0a0a0a', marginBottom: 14 }}>{selCo.director}</div>
                   {selCo.connections.length > 0 && (
                     <div>
-                      <div style={{ fontFamily: 'Share Tech Mono, monospace', fontSize: '0.52rem', color: '#526080', marginBottom: 8 }}>СВЯЗИ ({selCo.connections.length})</div>
+                      <div style={{ fontFamily: 'Share Tech Mono, monospace', fontSize: '0.52rem', color: '#8a8a8a', marginBottom: 8 }}>РЎР’РЇР—Р ({selCo.connections.length})</div>
                       {selCo.connections.map(tid => {
                         const t = COMPANIES.find(x => x.id === tid)
                         return t ? (
-                          <div key={tid} onClick={() => setGraphSelected(tid)} style={{ display: 'flex', justifyContent: 'space-between', padding: '7px 10px', marginBottom: 4, background: 'rgba(255,255,255,0.03)', borderRadius: 6, cursor: 'pointer' }}
-                            onMouseEnter={e => (e.currentTarget as HTMLElement).style.background = 'rgba(46,174,232,0.08)'}
+                          <div key={tid} onClick={() => setGraphSelected(tid)} style={{ display: 'flex', justifyContent: 'space-between', padding: '7px 10px', marginBottom: 4, background: 'rgba(0,0,0,0.03)', borderRadius: 6, cursor: 'pointer' }}
+                            onMouseEnter={e => (e.currentTarget as HTMLElement).style.background = 'rgba(0,0,0,0.08)'}
                             onMouseLeave={e => (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.03)'}>
-                            <span style={{ fontFamily: 'Inter, sans-serif', fontSize: '0.78rem', color: '#E8EDF5' }}>{t.name}</span>
+                            <span style={{ fontFamily: 'Inter, sans-serif', fontSize: '0.78rem', color: '#0a0a0a' }}>{t.name}</span>
                             <span style={{ fontFamily: 'Share Tech Mono, monospace', fontSize: '0.62rem', fontWeight: 700, color: riskColor(t.risk) }}>{t.risk}</span>
                           </div>
                         ) : null
@@ -553,18 +553,18 @@ export default function Argus() {
         })()}
 
         {viewTab === 'table' && <div style={{ display: 'grid', gridTemplateColumns: selected ? '1fr 380px' : '1fr', gap: 16, marginBottom: 0 }}>
-          <div style={{ background: 'var(--bg-card)', border: '1px solid rgba(46,174,232,0.1)', borderRadius: 8, overflow: 'hidden' }}>
-            <div style={{ display: 'grid', gridTemplateColumns: '2.5fr 1fr 1fr 1.4fr 1fr', padding: '0 16px', background: 'rgba(7,12,24,0.8)', borderBottom: '1px solid rgba(46,174,232,0.12)' }}>
+          <div style={{ background: 'var(--bg-card)', border: '1px solid rgba(0,0,0,0.1)', borderRadius: 8, overflow: 'hidden' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '2.5fr 1fr 1fr 1.4fr 1fr', padding: '0 16px', background: '#f5f5f3', borderBottom: '1px solid rgba(0,0,0,0.12)' }}>
               {[
-                { key: 'name', label: 'КОМПАНИЯ' },
-                { key: null, label: 'ОТРАСЛЬ' },
-                { key: 'revenue', label: 'ВЫРУЧКА $М' },
-                { key: null, label: 'РИСК-ИНДЕКС' },
-                { key: 'risk', label: 'УРОВЕНЬ' },
+                { key: 'name', label: 'РљРћРњРџРђРќРРЇ' },
+                { key: null, label: 'РћРўР РђРЎР›Р¬' },
+                { key: 'revenue', label: 'Р’Р«Р РЈР§РљРђ $Рњ' },
+                { key: null, label: 'Р РРЎРљ-РРќР”Р•РљРЎ' },
+                { key: 'risk', label: 'РЈР РћР’Р•РќР¬' },
               ].map((col, i) => (
                 <div key={i} onClick={col.key ? () => toggleSort(col.key as 'name'|'risk'|'revenue') : undefined}
-                  style={{ padding: '11px 0', fontFamily: 'Share Tech Mono, monospace', fontSize: '0.58rem', color: sortField === col.key ? '#2EAEE8' : '#526080', letterSpacing: '0.1em', cursor: col.key ? 'pointer' : 'default', userSelect: 'none', display: 'flex', alignItems: 'center', gap: 4 }}>
-                  {col.label}{col.key && sortField === col.key && <span>{sortDir === 'desc' ? ' ▼' : ' ▲'}</span>}
+                  style={{ padding: '11px 0', fontFamily: 'Share Tech Mono, monospace', fontSize: '0.58rem', color: sortField === col.key ? '#0a0a0a' : '#8a8a8a', letterSpacing: '0.1em', cursor: col.key ? 'pointer' : 'default', userSelect: 'none', display: 'flex', alignItems: 'center', gap: 4 }}>
+                  {col.label}{col.key && sortField === col.key && <span>{sortDir === 'desc' ? ' в–ј' : ' в–І'}</span>}
                 </div>
               ))}
             </div>
@@ -575,30 +575,30 @@ export default function Argus() {
                     display: 'grid',
                     gridTemplateColumns: '2.5fr 1fr 1fr 1.4fr 1fr',
                     padding: '0 16px',
-                    borderBottom: '1px solid rgba(46,174,232,0.06)',
+                    borderBottom: '1px solid rgba(0,0,0,0.06)',
                     cursor: 'pointer',
                     transition: 'background 220ms ease, box-shadow 220ms ease',
-                    background: selected === company.id ? 'rgba(46,174,232,0.08)' : idx % 2 === 0 ? 'transparent' : 'rgba(255,255,255,0.012)',
+                    background: selected === company.id ? 'rgba(0,0,0,0.08)' : idx % 2 === 0 ? 'transparent' : 'rgba(255,255,255,0.012)',
                     animation: flashingCompanyIds.has(company.id) ? 'argus-row-flash 1.2s ease-out 2' : undefined,
                   }}
-                  onMouseEnter={e => { if (selected !== company.id) (e.currentTarget as HTMLElement).style.background = 'rgba(46,174,232,0.05)' }}
+                  onMouseEnter={e => { if (selected !== company.id) (e.currentTarget as HTMLElement).style.background = 'rgba(0,0,0,0.05)' }}
                   onMouseLeave={e => { if (selected !== company.id) (e.currentTarget as HTMLElement).style.background = idx % 2 === 0 ? 'transparent' : 'rgba(255,255,255,0.012)' }}
                 >
                   <div style={{ padding: '12px 0', display: 'flex', alignItems: 'center', gap: 10 }}>
-                    <span style={{ width: 6, height: 6, borderRadius: '50%', background: company.risk >= 40 ? riskColor(company.risk) : 'transparent', flexShrink: 0, boxShadow: company.risk >= 70 ? '0 0 6px ' + riskColor(company.risk) : 'none' }} />
+                    <span style={{ width: 6, height: 6, borderRadius: '50%', background: company.risk >= 40 ? riskColor(company.risk) : 'transparent', flexShrink: 0, boxShadow: 'none' }} />
                     <div>
-                      <div style={{ fontFamily: 'Inter, sans-serif', fontWeight: 600, fontSize: '0.88rem', color: '#E8EDF5', lineHeight: 1.2 }}>{company.name}</div>
-                      <div style={{ fontFamily: 'Share Tech Mono, monospace', fontSize: '0.56rem', color: '#526080', marginTop: 2 }}>{company.city} · {company.type} · {company.founded}</div>
+                      <div style={{ fontFamily: 'Inter, sans-serif', fontWeight: 600, fontSize: '0.88rem', color: '#0a0a0a', lineHeight: 1.2 }}>{company.name}</div>
+                      <div style={{ fontFamily: 'Share Tech Mono, monospace', fontSize: '0.56rem', color: '#8a8a8a', marginTop: 2 }}>{company.city} В· {company.type} В· {company.founded}</div>
                     </div>
                   </div>
                   <div style={{ padding: '12px 0', display: 'flex', alignItems: 'center' }}>
-                    <span style={{ fontFamily: 'Inter, sans-serif', fontSize: '0.78rem', color: '#8A9BBF' }}>{company.sector}</span>
+                    <span style={{ fontFamily: 'Inter, sans-serif', fontSize: '0.78rem', color: '#3a3a3a' }}>{company.sector}</span>
                   </div>
                   <div style={{ padding: '12px 0', display: 'flex', alignItems: 'center' }}>
-                    <span style={{ fontFamily: 'Share Tech Mono, monospace', fontSize: '0.82rem', color: '#E8EDF5', fontWeight: 600, transition: 'color 220ms ease, transform 220ms ease, opacity 220ms ease' }}>{company.revenue.toLocaleString()}</span>
+                    <span style={{ fontFamily: 'Share Tech Mono, monospace', fontSize: '0.82rem', color: '#0a0a0a', fontWeight: 600, transition: 'color 220ms ease, transform 220ms ease, opacity 220ms ease' }}>{company.revenue.toLocaleString()}</span>
                   </div>
                   <div style={{ padding: '12px 0', display: 'flex', alignItems: 'center', gap: 8 }}>
-                    <div style={{ flex: 1, height: 5, background: 'rgba(255,255,255,0.06)', borderRadius: 3, overflow: 'hidden' }}>
+                    <div style={{ flex: 1, height: 5, background: 'rgba(0,0,0,0.08)', borderRadius: 3, overflow: 'hidden' }}>
                       <div style={{ width: company.risk + '%', height: '100%', background: riskColor(company.risk), borderRadius: 3, transition: 'width 420ms ease, background-color 320ms ease' }} />
                     </div>
                     <span style={{ fontFamily: 'Share Tech Mono, monospace', fontSize: '0.78rem', fontWeight: 700, color: riskColor(company.risk), width: 24, textAlign: 'right', flexShrink: 0, transition: 'color 320ms ease, transform 320ms ease, opacity 320ms ease' }}>{company.risk}</span>
@@ -609,58 +609,58 @@ export default function Argus() {
                 </div>
               ))}
               {filtered.length === 0 && (
-                <div style={{ padding: 40, textAlign: 'center', fontFamily: 'Share Tech Mono, monospace', fontSize: '0.75rem', color: '#526080' }}>Записей не найдено</div>
+                <div style={{ padding: 40, textAlign: 'center', fontFamily: 'Share Tech Mono, monospace', fontSize: '0.75rem', color: '#8a8a8a' }}>Р—Р°РїРёСЃРµР№ РЅРµ РЅР°Р№РґРµРЅРѕ</div>
               )}
             </div>
           </div>
 
           {selectedCompany && (
-            <div style={{ background: 'var(--bg-card)', border: '1px solid rgba(46,174,232,0.15)', borderRadius: 8, padding: 20, alignSelf: 'start', position: 'sticky', top: 84 }}>
+            <div style={{ background: 'var(--bg-card)', border: '1px solid rgba(0,0,0,0.15)', borderRadius: 8, padding: 20, alignSelf: 'start', position: 'sticky', top: 84 }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 18 }}>
-                <span style={{ fontFamily: 'Share Tech Mono, monospace', fontSize: '0.58rem', color: '#2EAEE8', letterSpacing: '0.15em' }}>ДОСЬЕ КОМПАНИИ</span>
-                <button onClick={() => setSelected(null)} style={{ background: 'none', border: 'none', color: '#526080', cursor: 'pointer', fontSize: '1rem', lineHeight: 1 }}>✕</button>
+                <span style={{ fontFamily: 'Share Tech Mono, monospace', fontSize: '0.58rem', color: '#0a0a0a', letterSpacing: '0.15em' }}>Р”РћРЎР¬Р• РљРћРњРџРђРќРР</span>
+                <button onClick={() => setSelected(null)} style={{ background: 'none', border: 'none', color: '#8a8a8a', cursor: 'pointer', fontSize: '1rem', lineHeight: 1 }}>вњ•</button>
               </div>
-              <h2 style={{ fontFamily: 'Inter, sans-serif', fontWeight: 700, fontSize: '1.05rem', color: '#E8EDF5', marginBottom: 4, lineHeight: 1.3 }}>{selectedCompany.name}</h2>
-              <div style={{ fontFamily: 'Share Tech Mono, monospace', fontSize: '0.6rem', color: '#526080', marginBottom: 16 }}>{selectedCompany.city} · {selectedCompany.type} · Осн. {selectedCompany.founded}</div>
+              <h2 style={{ fontFamily: 'Inter, sans-serif', fontWeight: 700, fontSize: '1.05rem', color: '#0a0a0a', marginBottom: 4, lineHeight: 1.3 }}>{selectedCompany.name}</h2>
+              <div style={{ fontFamily: 'Share Tech Mono, monospace', fontSize: '0.6rem', color: '#8a8a8a', marginBottom: 16 }}>{selectedCompany.city} В· {selectedCompany.type} В· РћСЃРЅ. {selectedCompany.founded}</div>
               <div style={{ background: riskColor(selectedCompany.risk) + '10', border: '1px solid ' + riskColor(selectedCompany.risk) + '30', borderRadius: 8, padding: '12px 14px', marginBottom: 14 }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
-                  <span style={{ fontFamily: 'Share Tech Mono, monospace', fontSize: '0.58rem', color: '#526080', letterSpacing: '0.1em' }}>РИСК-ИНДЕКС</span>
+                  <span style={{ fontFamily: 'Share Tech Mono, monospace', fontSize: '0.58rem', color: '#8a8a8a', letterSpacing: '0.1em' }}>Р РРЎРљ-РРќР”Р•РљРЎ</span>
                   <span style={{ fontFamily: 'Orbitron, monospace', fontWeight: 900, fontSize: '1.6rem', color: riskColor(selectedCompany.risk) }}>{selectedCompany.risk}</span>
                 </div>
-                <div style={{ height: 6, background: 'rgba(255,255,255,0.06)', borderRadius: 3, overflow: 'hidden', marginBottom: 6 }}>
+                <div style={{ height: 6, background: 'rgba(0,0,0,0.08)', borderRadius: 3, overflow: 'hidden', marginBottom: 6 }}>
                   <div style={{ width: selectedCompany.risk + '%', height: '100%', background: riskColor(selectedCompany.risk), borderRadius: 3 }} />
                 </div>
                 <span style={{ fontFamily: 'Share Tech Mono, monospace', fontSize: '0.6rem', color: riskColor(selectedCompany.risk) }}>{riskLabel(selectedCompany.risk)}</span>
               </div>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, marginBottom: 14 }}>
                 {[
-                  { k: 'ОТРАСЛЬ', v: selectedCompany.sector },
-                  { k: 'ВЫРУЧКА', v: '$' + selectedCompany.revenue.toLocaleString() + 'М' },
-                  { k: 'СОТРУДНИКИ', v: selectedCompany.employees.toLocaleString() },
-                  { k: 'ФОРМА', v: selectedCompany.type },
+                  { k: 'РћРўР РђРЎР›Р¬', v: selectedCompany.sector },
+                  { k: 'Р’Р«Р РЈР§РљРђ', v: '$' + selectedCompany.revenue.toLocaleString() + 'Рњ' },
+                  { k: 'РЎРћРўР РЈР”РќРРљР', v: selectedCompany.employees.toLocaleString() },
+                  { k: 'Р¤РћР РњРђ', v: selectedCompany.type },
                 ].map(m => (
-                  <div key={m.k} style={{ background: 'rgba(255,255,255,0.03)', borderRadius: 6, padding: '10px 12px' }}>
-                    <div style={{ fontFamily: 'Share Tech Mono, monospace', fontSize: '0.52rem', color: '#526080', letterSpacing: '0.08em', marginBottom: 4 }}>{m.k}</div>
-                    <div style={{ fontFamily: 'Inter, sans-serif', fontWeight: 600, fontSize: '0.88rem', color: '#E8EDF5' }}>{m.v}</div>
+                  <div key={m.k} style={{ background: 'rgba(0,0,0,0.03)', borderRadius: 6, padding: '10px 12px' }}>
+                    <div style={{ fontFamily: 'Share Tech Mono, monospace', fontSize: '0.52rem', color: '#8a8a8a', letterSpacing: '0.08em', marginBottom: 4 }}>{m.k}</div>
+                    <div style={{ fontFamily: 'Inter, sans-serif', fontWeight: 600, fontSize: '0.88rem', color: '#0a0a0a' }}>{m.v}</div>
                   </div>
                 ))}
               </div>
               <div style={{ marginBottom: 14 }}>
-                <div style={{ fontFamily: 'Share Tech Mono, monospace', fontSize: '0.52rem', color: '#526080', letterSpacing: '0.08em', marginBottom: 6 }}>ОПИСАНИЕ</div>
-                <p style={{ fontFamily: 'Inter, sans-serif', fontSize: '0.82rem', color: '#8A9BBF', lineHeight: 1.55, marginBottom: 10 }}>{selectedCompany.description}</p>
-                <div style={{ fontFamily: 'Share Tech Mono, monospace', fontSize: '0.52rem', color: '#526080', letterSpacing: '0.08em', marginBottom: 4 }}>ДИРЕКТОР</div>
-                <div style={{ fontFamily: 'Inter, sans-serif', fontSize: '0.85rem', color: '#E8EDF5', fontWeight: 500 }}>{selectedCompany.director}</div>
+                <div style={{ fontFamily: 'Share Tech Mono, monospace', fontSize: '0.52rem', color: '#8a8a8a', letterSpacing: '0.08em', marginBottom: 6 }}>РћРџРРЎРђРќРР•</div>
+                <p style={{ fontFamily: 'Inter, sans-serif', fontSize: '0.82rem', color: '#3a3a3a', lineHeight: 1.55, marginBottom: 10 }}>{selectedCompany.description}</p>
+                <div style={{ fontFamily: 'Share Tech Mono, monospace', fontSize: '0.52rem', color: '#8a8a8a', letterSpacing: '0.08em', marginBottom: 4 }}>Р”РР Р•РљРўРћР </div>
+                <div style={{ fontFamily: 'Inter, sans-serif', fontSize: '0.85rem', color: '#0a0a0a', fontWeight: 500 }}>{selectedCompany.director}</div>
               </div>
               {connectedCompanies.length > 0 && (
                 <div>
-                  <div style={{ fontFamily: 'Share Tech Mono, monospace', fontSize: '0.52rem', color: '#526080', letterSpacing: '0.08em', marginBottom: 8 }}>СВЯЗАННЫЕ ({connectedCompanies.length})</div>
+                  <div style={{ fontFamily: 'Share Tech Mono, monospace', fontSize: '0.52rem', color: '#8a8a8a', letterSpacing: '0.08em', marginBottom: 8 }}>РЎР’РЇР—РђРќРќР«Р• ({connectedCompanies.length})</div>
                   {connectedCompanies.map(c => (
                     <div key={c.id} onClick={() => setSelected(c.id)}
-                      style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '8px 10px', marginBottom: 4, background: 'rgba(255,255,255,0.03)', borderRadius: 6, cursor: 'pointer', border: '1px solid transparent', transition: 'all 150ms' }}
-                      onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(46,174,232,0.2)'; (e.currentTarget as HTMLElement).style.background = 'rgba(46,174,232,0.06)' }}
+                      style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '8px 10px', marginBottom: 4, background: 'rgba(0,0,0,0.03)', borderRadius: 6, cursor: 'pointer', border: '1px solid transparent', transition: 'all 150ms' }}
+                      onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(0,0,0,0.2)'; (e.currentTarget as HTMLElement).style.background = 'rgba(0,0,0,0.06)' }}
                       onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = 'transparent'; (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.03)' }}
                     >
-                      <span style={{ fontFamily: 'Inter, sans-serif', fontSize: '0.8rem', color: '#E8EDF5' }}>{c.name}</span>
+                      <span style={{ fontFamily: 'Inter, sans-serif', fontSize: '0.8rem', color: '#0a0a0a' }}>{c.name}</span>
                       <span style={{ fontFamily: 'Share Tech Mono, monospace', fontSize: '0.62rem', fontWeight: 700, color: riskColor(c.risk) }}>{c.risk}</span>
                     </div>
                   ))}
@@ -673,10 +673,10 @@ export default function Argus() {
         {viewTab === 'table' && (() => {
           const analyticCompanies = COMPANIES.filter(c => analyticsIds.has(c.id))
           const metricVal = (c: typeof COMPANIES[0]) => analyticMetric === 'risk' ? c.risk : analyticMetric === 'revenue' ? c.revenue : c.employees
-          const metricLabel = analyticMetric === 'risk' ? 'РИСК' : analyticMetric === 'revenue' ? 'ВЫРУЧКА $М' : 'СОТРУДНИКИ'
+          const metricLabel = analyticMetric === 'risk' ? 'Р РРЎРљ' : analyticMetric === 'revenue' ? 'Р’Р«Р РЈР§РљРђ $Рњ' : 'РЎРћРўР РЈР”РќРРљР'
           const metricFmt = (v: number) => analyticMetric === 'revenue' ? (v >= 1000 ? Math.round(v / 1000) + 'K' : String(v)) : v.toLocaleString()
           const secondMetric = analyticMetric === 'risk' ? 'revenue' : analyticMetric === 'revenue' ? 'employees' : 'risk'
-          const secondLabel = secondMetric === 'risk' ? 'РИСК' : secondMetric === 'revenue' ? 'ВЫРУЧКА $М' : 'СОТРУДНИКИ'
+          const secondLabel = secondMetric === 'risk' ? 'Р РРЎРљ' : secondMetric === 'revenue' ? 'Р’Р«Р РЈР§РљРђ $Рњ' : 'РЎРћРўР РЈР”РќРРљР'
           const secondVal = (c: typeof COMPANIES[0]) => secondMetric === 'risk' ? c.risk : secondMetric === 'revenue' ? c.revenue : c.employees
           const secondFmt = (v: number) => secondMetric === 'revenue' ? (v >= 1000 ? Math.round(v / 1000) + 'K' : String(v)) : v.toLocaleString()
 
@@ -689,7 +689,7 @@ export default function Argus() {
           analyticCompanies.forEach(c => { industryCounts[c.sector] = (industryCounts[c.sector] || 0) + 1 })
           const donutIndustries = Object.entries(industryCounts).sort((a, b) => b[1] - a[1]).slice(0, 6)
           const donutTotal = donutIndustries.reduce((s, [, v]) => s + v, 0)
-          const pieColors = ['#2EAEE8', '#1B9AAA', '#C9A84C', '#E07B39', '#D94040', '#526080']
+          const pieColors = ['#0a0a0a', '#3a3a3a', '#5a5a5a', '#888888', '#0a0a0a', '#8a8a8a']
           let donutAngle = -Math.PI / 2
           const pieSlices = donutIndustries.map(([label, count], i) => {
             const da = donutTotal > 0 ? (count / donutTotal) * Math.PI * 2 : 0
@@ -713,14 +713,14 @@ export default function Argus() {
           function moveTip(e: React.MouseEvent) { setChartTooltip(t => t.lines.length > 0 ? { ...t, x: e.clientX, y: e.clientY } : t) }
 
           return (
-            <div style={{ marginTop: 32, paddingTop: 28, borderTop: '1px solid rgba(46,174,232,0.1)' }}>
+            <div style={{ marginTop: 32, paddingTop: 28, borderTop: '1px solid rgba(0,0,0,0.1)' }}>
               <style>{`@keyframes bar-grow { from { transform: scaleY(0) } to { transform: scaleY(1) } }`}</style>
 
               {/* Tooltip */}
               {chartTooltip.lines.length > 0 && (
-                <div style={{ position: 'fixed', left: chartTooltip.x + 14, top: chartTooltip.y - 8, zIndex: 9999, background: 'rgba(7,12,24,0.96)', border: '1px solid rgba(46,174,232,0.25)', borderRadius: 6, padding: '8px 12px', pointerEvents: 'none', minWidth: 160, boxShadow: '0 8px 24px rgba(0,0,0,0.5)' }}>
+                <div style={{ position: 'fixed', left: chartTooltip.x + 14, top: chartTooltip.y - 8, zIndex: 9999, background: 'rgba(255,255,255,0.96)', border: '1px solid rgba(0,0,0,0.25)', borderRadius: 6, padding: '8px 12px', pointerEvents: 'none', minWidth: 160, boxShadow: '0 8px 24px rgba(0,0,0,0.5)' }}>
                   {chartTooltip.lines.map((l, i) => (
-                    <div key={i} style={{ fontFamily: i === 0 ? 'Inter, sans-serif' : 'Share Tech Mono, monospace', fontWeight: i === 0 ? 600 : 400, fontSize: i === 0 ? '0.82rem' : '0.68rem', color: i === 0 ? '#E8EDF5' : '#8A9BBF', marginBottom: i < chartTooltip.lines.length - 1 ? 3 : 0 }}>{l}</div>
+                    <div key={i} style={{ fontFamily: i === 0 ? 'Inter, sans-serif' : 'Share Tech Mono, monospace', fontWeight: i === 0 ? 600 : 400, fontSize: i === 0 ? '0.82rem' : '0.68rem', color: i === 0 ? '#0a0a0a' : '#3a3a3a', marginBottom: i < chartTooltip.lines.length - 1 ? 3 : 0 }}>{l}</div>
                   ))}
                 </div>
               )}
@@ -729,42 +729,42 @@ export default function Argus() {
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20, flexWrap: 'wrap', gap: 12 }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
                   <span className="status-dot" />
-                  <span style={{ fontFamily: 'Share Tech Mono, monospace', fontSize: '0.6rem', color: '#2EAEE8', letterSpacing: '0.18em' }}>ANALYTICS — RISK INTELLIGENCE OVERVIEW</span>
+                  <span style={{ fontFamily: 'Share Tech Mono, monospace', fontSize: '0.6rem', color: '#0a0a0a', letterSpacing: '0.18em' }}>ANALYTICS вЂ” RISK INTELLIGENCE OVERVIEW</span>
                 </div>
                 <div style={{ display: 'flex', gap: 10, alignItems: 'center', flexWrap: 'wrap' }}>
                   {/* Metric toggle */}
-                  <div style={{ display: 'flex', gap: 0, border: '1px solid rgba(46,174,232,0.15)', borderRadius: 6, overflow: 'hidden' }}>
+                  <div style={{ display: 'flex', gap: 0, border: '1px solid rgba(0,0,0,0.15)', borderRadius: 6, overflow: 'hidden' }}>
                     {(['risk', 'revenue', 'employees'] as const).map(m => (
-                      <button key={m} onClick={() => setAnalyticMetric(m)} style={{ padding: '6px 14px', fontFamily: 'Share Tech Mono, monospace', fontSize: '0.62rem', letterSpacing: '0.08em', cursor: 'pointer', border: 'none', transition: 'all 150ms', background: analyticMetric === m ? 'rgba(46,174,232,0.15)' : 'transparent', color: analyticMetric === m ? '#2EAEE8' : '#526080' }}>
-                        {m === 'risk' ? 'РИСК' : m === 'revenue' ? 'ВЫРУЧКА' : 'СОТРУДНИКИ'}
+                      <button key={m} onClick={() => setAnalyticMetric(m)} style={{ padding: '6px 14px', fontFamily: 'Share Tech Mono, monospace', fontSize: '0.62rem', letterSpacing: '0.08em', cursor: 'pointer', border: 'none', transition: 'all 150ms', background: analyticMetric === m ? 'rgba(0,0,0,0.15)' : 'transparent', color: analyticMetric === m ? '#0a0a0a' : '#8a8a8a' }}>
+                        {m === 'risk' ? 'Р РРЎРљ' : m === 'revenue' ? 'Р’Р«Р РЈР§РљРђ' : 'РЎРћРўР РЈР”РќРРљР'}
                       </button>
                     ))}
                   </div>
                   {/* Company selector */}
                   <div style={{ position: 'relative' }}>
                     {selectorOpen && <div style={{ position: 'fixed', inset: 0, zIndex: 99 }} onClick={() => setSelectorOpen(false)} />}
-                    <button onClick={() => setSelectorOpen(o => !o)} style={{ position: 'relative', zIndex: 100, padding: '6px 14px', fontFamily: 'Share Tech Mono, monospace', fontSize: '0.62rem', letterSpacing: '0.08em', cursor: 'pointer', background: selectorOpen ? 'rgba(46,174,232,0.15)' : 'rgba(46,174,232,0.05)', border: '1px solid rgba(46,174,232,0.2)', borderRadius: 6, color: '#2EAEE8', transition: 'all 150ms', whiteSpace: 'nowrap' }}>
-                      ◈ КОМПАНИИ ({analyticsIds.size}) ▾
+                    <button onClick={() => setSelectorOpen(o => !o)} style={{ position: 'relative', zIndex: 100, padding: '6px 14px', fontFamily: 'Share Tech Mono, monospace', fontSize: '0.62rem', letterSpacing: '0.08em', cursor: 'pointer', background: selectorOpen ? 'rgba(0,0,0,0.15)' : 'rgba(0,0,0,0.05)', border: '1px solid rgba(0,0,0,0.2)', borderRadius: 6, color: '#0a0a0a', transition: 'all 150ms', whiteSpace: 'nowrap' }}>
+                      в—€ РљРћРњРџРђРќРР ({analyticsIds.size}) в–ѕ
                     </button>
                     {selectorOpen && (
-                      <div style={{ position: 'absolute', right: 0, top: 'calc(100% + 6px)', zIndex: 200, width: 300, maxHeight: 360, overflowY: 'auto', background: 'var(--bg-card)', border: '1px solid rgba(46,174,232,0.2)', borderRadius: 8, boxShadow: '0 16px 48px rgba(0,0,0,0.5)', padding: '8px 0' }}>
-                        <div style={{ display: 'flex', gap: 8, padding: '8px 12px 10px', borderBottom: '1px solid rgba(46,174,232,0.08)' }}>
-                          <button onClick={() => setAnalyticsIds(new Set(COMPANIES.map(c => c.id)))} style={{ flex: 1, padding: '5px 0', fontFamily: 'Share Tech Mono, monospace', fontSize: '0.58rem', cursor: 'pointer', background: 'rgba(46,174,232,0.08)', border: '1px solid rgba(46,174,232,0.2)', borderRadius: 4, color: '#2EAEE8' }}>ВЫБРАТЬ ВСЕ</button>
-                          <button onClick={() => setAnalyticsIds(new Set())} style={{ flex: 1, padding: '5px 0', fontFamily: 'Share Tech Mono, monospace', fontSize: '0.58rem', cursor: 'pointer', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 4, color: '#526080' }}>СБРОСИТЬ</button>
+                      <div style={{ position: 'absolute', right: 0, top: 'calc(100% + 6px)', zIndex: 200, width: 300, maxHeight: 360, overflowY: 'auto', background: 'var(--bg-card)', border: '1px solid rgba(0,0,0,0.2)', borderRadius: 8, boxShadow: '0 16px 48px rgba(0,0,0,0.5)', padding: '8px 0' }}>
+                        <div style={{ display: 'flex', gap: 8, padding: '8px 12px 10px', borderBottom: '1px solid rgba(0,0,0,0.08)' }}>
+                          <button onClick={() => setAnalyticsIds(new Set(COMPANIES.map(c => c.id)))} style={{ flex: 1, padding: '5px 0', fontFamily: 'Share Tech Mono, monospace', fontSize: '0.58rem', cursor: 'pointer', background: 'rgba(0,0,0,0.08)', border: '1px solid rgba(0,0,0,0.2)', borderRadius: 4, color: '#0a0a0a' }}>Р’Р«Р‘Р РђРўР¬ Р’РЎР•</button>
+                          <button onClick={() => setAnalyticsIds(new Set())} style={{ flex: 1, padding: '5px 0', fontFamily: 'Share Tech Mono, monospace', fontSize: '0.58rem', cursor: 'pointer', background: 'rgba(0,0,0,0.03)', border: '1px solid rgba(0,0,0,0.12)', borderRadius: 4, color: '#8a8a8a' }}>РЎР‘Р РћРЎРРўР¬</button>
                         </div>
                         {COMPANIES.map(c => {
                           const checked = analyticsIds.has(c.id)
                           return (
                             <div key={c.id} onClick={() => setAnalyticsIds(prev => { const n = new Set(prev); if (n.has(c.id)) n.delete(c.id); else n.add(c.id); return n })}
-                              style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '7px 12px', cursor: 'pointer', background: checked ? 'rgba(46,174,232,0.05)' : 'transparent', transition: 'background 120ms' }}
-                              onMouseEnter={e => (e.currentTarget as HTMLElement).style.background = checked ? 'rgba(46,174,232,0.1)' : 'rgba(255,255,255,0.03)'}
-                              onMouseLeave={e => (e.currentTarget as HTMLElement).style.background = checked ? 'rgba(46,174,232,0.05)' : 'transparent'}>
-                              <div style={{ width: 14, height: 14, border: '1px solid ' + (checked ? '#2EAEE8' : 'rgba(255,255,255,0.15)'), borderRadius: 3, background: checked ? '#2EAEE8' : 'transparent', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 150ms' }}>
-                                {checked && <svg width="9" height="9" viewBox="0 0 9 9"><polyline points="1.5,4.5 3.5,6.5 7.5,2" stroke="#050508" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round" /></svg>}
+                              style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '7px 12px', cursor: 'pointer', background: checked ? 'rgba(0,0,0,0.05)' : 'transparent', transition: 'background 120ms' }}
+                              onMouseEnter={e => (e.currentTarget as HTMLElement).style.background = checked ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.03)'}
+                              onMouseLeave={e => (e.currentTarget as HTMLElement).style.background = checked ? 'rgba(0,0,0,0.05)' : 'transparent'}>
+                              <div style={{ width: 14, height: 14, border: '1px solid ' + (checked ? '#0a0a0a' : 'rgba(0,0,0,0.15)'), borderRadius: 3, background: checked ? '#0a0a0a' : 'transparent', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 150ms' }}>
+                                {checked && <svg width="9" height="9" viewBox="0 0 9 9"><polyline points="1.5,4.5 3.5,6.5 7.5,2" stroke="#0a0a0a" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round" /></svg>}
                               </div>
                               <div style={{ flex: 1, minWidth: 0 }}>
-                                <div style={{ fontFamily: 'Inter, sans-serif', fontSize: '0.76rem', color: '#E8EDF5', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{c.name}</div>
-                                <div style={{ fontFamily: 'Share Tech Mono, monospace', fontSize: '0.54rem', color: '#526080' }}>{c.sector} · риск {c.risk}</div>
+                                <div style={{ fontFamily: 'Inter, sans-serif', fontSize: '0.76rem', color: '#0a0a0a', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{c.name}</div>
+                                <div style={{ fontFamily: 'Share Tech Mono, monospace', fontSize: '0.54rem', color: '#8a8a8a' }}>{c.sector} В· СЂРёСЃРє {c.risk}</div>
                               </div>
                               <div style={{ width: 6, height: 6, borderRadius: '50%', background: riskColor(c.risk), flexShrink: 0 }} />
                             </div>
@@ -777,21 +777,21 @@ export default function Argus() {
               </div>
 
               {analyticCompanies.length === 0 ? (
-                <div style={{ padding: '48px 0', textAlign: 'center', fontFamily: 'Share Tech Mono, monospace', fontSize: '0.75rem', color: '#526080' }}>Выберите компании для отображения аналитики</div>
+                <div style={{ padding: '48px 0', textAlign: 'center', fontFamily: 'Share Tech Mono, monospace', fontSize: '0.75rem', color: '#8a8a8a' }}>Р’С‹Р±РµСЂРёС‚Рµ РєРѕРјРїР°РЅРёРё РґР»СЏ РѕС‚РѕР±СЂР°Р¶РµРЅРёСЏ Р°РЅР°Р»РёС‚РёРєРё</div>
               ) : (
                 <>
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 16 }}>
 
                     {/* Chart 1: Top by selected metric */}
-                    <div style={{ background: 'var(--bg-card)', border: '1px solid rgba(46,174,232,0.1)', borderRadius: 8, padding: '20px 20px 16px' }}>
-                      <div style={{ fontFamily: 'Share Tech Mono, monospace', fontSize: '0.6rem', color: '#526080', letterSpacing: '0.12em', marginBottom: 16 }}>ТОП-10 ПО {metricLabel}</div>
+                    <div style={{ background: 'var(--bg-card)', border: '1px solid rgba(0,0,0,0.1)', borderRadius: 8, padding: '20px 20px 16px' }}>
+                      <div style={{ fontFamily: 'Share Tech Mono, monospace', fontSize: '0.6rem', color: '#8a8a8a', letterSpacing: '0.12em', marginBottom: 16 }}>РўРћРџ-10 РџРћ {metricLabel}</div>
                       <svg width="100%" viewBox={`0 0 ${padL + chart1Data.length * (barW + barGap) + 20} ${chartH + 60}`} style={{ overflow: 'visible', display: 'block' }}>
                         {[0, 0.25, 0.5, 0.75, 1].map(v => {
                           const yv = chartH * (1 - v)
                           return (
                             <g key={v}>
-                              <line x1={padL} y1={yv} x2={padL + chart1Data.length * (barW + barGap)} y2={yv} stroke="rgba(255,255,255,0.05)" strokeWidth="1" />
-                              <text x={padL - 2} y={yv + 4} textAnchor="end" style={{ fontFamily: 'Share Tech Mono, monospace', fontSize: 7, fill: '#526080' }}>{metricFmt(Math.round(maxVal1 * v))}</text>
+                              <line x1={padL} y1={yv} x2={padL + chart1Data.length * (barW + barGap)} y2={yv} stroke="rgba(0,0,0,0.04)" strokeWidth="1" />
+                              <text x={padL - 2} y={yv + 4} textAnchor="end" style={{ fontFamily: 'Share Tech Mono, monospace', fontSize: 7, fill: '#8a8a8a' }}>{metricFmt(Math.round(maxVal1 * v))}</text>
                             </g>
                           )
                         })}
@@ -803,24 +803,24 @@ export default function Argus() {
                           return (
                             <g key={`${c.id}-${analyticMetric}`} style={{ cursor: 'pointer' }}
                               onClick={() => { setSelected(c.id) }}
-                              onMouseEnter={e => showTip(e, [c.name, `${metricLabel}: ${metricFmt(metricVal(c))}`, `Риск: ${riskLabel(c.risk)} (${c.risk})`])}
+                              onMouseEnter={e => showTip(e, [c.name, `${metricLabel}: ${metricFmt(metricVal(c))}`, `Р РёСЃРє: ${riskLabel(c.risk)} (${c.risk})`])}
                               onMouseMove={moveTip} onMouseLeave={hideTip}>
                               <rect x={bx} y={chartH - bh} width={barW} height={bh} fill={col}
                                 opacity={isSel ? 1 : 0.78} rx="2"
-                                style={{ transformBox: 'fill-box', transformOrigin: '50% 100%', animation: 'bar-grow 400ms ease forwards', filter: isSel ? `drop-shadow(0 0 8px ${col})` : undefined }} />
+                                style={{ transformBox: 'fill-box', transformOrigin: '50% 100%', animation: 'bar-grow 400ms ease forwards' }} />
                               <text x={bx + barW / 2} y={chartH - bh - 4} textAnchor="middle" style={{ fontFamily: 'Share Tech Mono, monospace', fontSize: 9, fill: col, fontWeight: 700 }}>{metricFmt(metricVal(c))}</text>
-                              <text x={bx + barW / 2} y={chartH + 14} textAnchor="middle" style={{ fontFamily: 'Inter, sans-serif', fontSize: 8, fill: isSel ? '#E8EDF5' : '#8A9BBF' }}>{c.name.split(' ')[0].slice(0, 10)}</text>
+                              <text x={bx + barW / 2} y={chartH + 14} textAnchor="middle" style={{ fontFamily: 'Inter, sans-serif', fontSize: 8, fill: isSel ? '#0a0a0a' : '#3a3a3a' }}>{c.name.split(' ')[0].slice(0, 10)}</text>
                             </g>
                           )
                         })}
-                        <line x1={padL} y1={chartH} x2={padL + chart1Data.length * (barW + barGap)} y2={chartH} stroke="rgba(46,174,232,0.2)" strokeWidth="1" />
+                        <line x1={padL} y1={chartH} x2={padL + chart1Data.length * (barW + barGap)} y2={chartH} stroke="rgba(0,0,0,0.2)" strokeWidth="1" />
                       </svg>
                     </div>
 
                     {/* Chart 2: Industry donut */}
-                    <div style={{ background: 'var(--bg-card)', border: '1px solid rgba(46,174,232,0.1)', borderRadius: 8, padding: '20px 20px 16px' }}>
-                      <div style={{ fontFamily: 'Share Tech Mono, monospace', fontSize: '0.6rem', color: '#526080', letterSpacing: '0.12em', marginBottom: 16 }}>ОТРАСЛЕВОЕ РАСПРЕДЕЛЕНИЕ</div>
-                      {donutTotal === 0 ? <div style={{ color: '#526080', fontSize: '0.75rem', fontFamily: 'Share Tech Mono, monospace', padding: 20 }}>Нет данных</div> : (
+                    <div style={{ background: 'var(--bg-card)', border: '1px solid rgba(0,0,0,0.1)', borderRadius: 8, padding: '20px 20px 16px' }}>
+                      <div style={{ fontFamily: 'Share Tech Mono, monospace', fontSize: '0.6rem', color: '#8a8a8a', letterSpacing: '0.12em', marginBottom: 16 }}>РћРўР РђРЎР›Р•Р’РћР• Р РђРЎРџР Р•Р”Р•Р›Р•РќРР•</div>
+                      {donutTotal === 0 ? <div style={{ color: '#8a8a8a', fontSize: '0.75rem', fontFamily: 'Share Tech Mono, monospace', padding: 20 }}>РќРµС‚ РґР°РЅРЅС‹С…</div> : (
                         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
                           <svg width="200" height="200" style={{ flexShrink: 0 }}>
                             {pieSlices.map((sl, i) => {
@@ -828,29 +828,29 @@ export default function Argus() {
                               return (
                                 <path key={i} d={sl.path} fill={sl.color}
                                   opacity={isActive ? 1 : 0.82}
-                                  stroke={isActive ? '#fff' : 'rgba(7,12,24,0.8)'}
+                                  stroke='#d4d4d0'
                                   strokeWidth={isActive ? 3 : 2}
-                                  style={{ cursor: 'pointer', filter: isActive ? `drop-shadow(0 0 8px ${sl.color})` : undefined }}
-                                  onClick={() => setIndustryFilter(industryFilter === sl.label ? 'Все' : sl.label)}
-                                  onMouseEnter={e => showTip(e, [sl.label, `Компаний: ${sl.count}`, `Доля: ${sl.pct}%`])}
+                                  style={{ cursor: 'pointer' }}
+                                  onClick={() => setIndustryFilter(industryFilter === sl.label ? 'Р’СЃРµ' : sl.label)}
+                                  onMouseEnter={e => showTip(e, [sl.label, `РљРѕРјРїР°РЅРёР№: ${sl.count}`, `Р”РѕР»СЏ: ${sl.pct}%`])}
                                   onMouseMove={moveTip} onMouseLeave={hideTip}
                                 />
                               )
                             })}
-                            <text x="100" y="95" textAnchor="middle" style={{ fontFamily: 'Orbitron, monospace', fontSize: 20, fontWeight: 900, fill: '#E8EDF5' }}>{analyticCompanies.length}</text>
-                            <text x="100" y="112" textAnchor="middle" style={{ fontFamily: 'Share Tech Mono, monospace', fontSize: 8, fill: '#526080' }}>КОМПАНИЙ</text>
+                            <text x="100" y="95" textAnchor="middle" style={{ fontFamily: 'Orbitron, monospace', fontSize: 20, fontWeight: 900, fill: '#0a0a0a' }}>{analyticCompanies.length}</text>
+                            <text x="100" y="112" textAnchor="middle" style={{ fontFamily: 'Share Tech Mono, monospace', fontSize: 8, fill: '#8a8a8a' }}>РљРћРњРџРђРќРР™</text>
                           </svg>
                           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 5 }}>
                             {pieSlices.map((sl, i) => {
                               const isActive = industryFilter === sl.label
                               return (
-                                <div key={i} onClick={() => setIndustryFilter(industryFilter === sl.label ? 'Все' : sl.label)}
-                                  style={{ display: 'flex', alignItems: 'center', gap: 7, cursor: 'pointer', padding: '3px 6px', borderRadius: 4, background: isActive ? 'rgba(46,174,232,0.08)' : 'transparent', transition: 'background 150ms' }}
-                                  onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = 'rgba(46,174,232,0.06)'; showTip(e, [sl.label, `${sl.count} компаний · ${sl.pct}%`]) }}
+                                <div key={i} onClick={() => setIndustryFilter(industryFilter === sl.label ? 'Р’СЃРµ' : sl.label)}
+                                  style={{ display: 'flex', alignItems: 'center', gap: 7, cursor: 'pointer', padding: '3px 6px', borderRadius: 4, background: isActive ? 'rgba(0,0,0,0.08)' : 'transparent', transition: 'background 150ms' }}
+                                  onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = 'rgba(0,0,0,0.06)'; showTip(e, [sl.label, `${sl.count} РєРѕРјРїР°РЅРёР№ В· ${sl.pct}%`]) }}
                                   onMouseMove={moveTip}
-                                  onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = isActive ? 'rgba(46,174,232,0.08)' : 'transparent'; hideTip() }}>
+                                  onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = isActive ? 'rgba(0,0,0,0.08)' : 'transparent'; hideTip() }}>
                                   <div style={{ width: 8, height: 8, borderRadius: '50%', background: sl.color, flexShrink: 0 }} />
-                                  <span style={{ fontFamily: 'Inter, sans-serif', fontSize: '0.7rem', color: isActive ? '#E8EDF5' : '#8A9BBF', flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{sl.label}</span>
+                                  <span style={{ fontFamily: 'Inter, sans-serif', fontSize: '0.7rem', color: isActive ? '#0a0a0a' : '#3a3a3a', flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{sl.label}</span>
                                   <span style={{ fontFamily: 'Share Tech Mono, monospace', fontSize: '0.62rem', color: sl.color, fontWeight: 700, flexShrink: 0 }}>{sl.pct}%</span>
                                 </div>
                               )
@@ -861,15 +861,15 @@ export default function Argus() {
                     </div>
 
                     {/* Chart 3: Top by secondary metric */}
-                    <div style={{ background: 'var(--bg-card)', border: '1px solid rgba(46,174,232,0.1)', borderRadius: 8, padding: '20px 20px 16px' }}>
-                      <div style={{ fontFamily: 'Share Tech Mono, monospace', fontSize: '0.6rem', color: '#526080', letterSpacing: '0.12em', marginBottom: 16 }}>ТОП-10 ПО {secondLabel}</div>
+                    <div style={{ background: 'var(--bg-card)', border: '1px solid rgba(0,0,0,0.1)', borderRadius: 8, padding: '20px 20px 16px' }}>
+                      <div style={{ fontFamily: 'Share Tech Mono, monospace', fontSize: '0.6rem', color: '#8a8a8a', letterSpacing: '0.12em', marginBottom: 16 }}>РўРћРџ-10 РџРћ {secondLabel}</div>
                       <svg width="100%" viewBox={`0 0 ${padL + chart3Data.length * (barW + barGap) + 20} ${chartH + 60}`} style={{ overflow: 'visible', display: 'block' }}>
                         {[0, 0.25, 0.5, 0.75, 1].map(v => {
                           const yv = chartH * (1 - v)
                           return (
                             <g key={v}>
-                              <line x1={padL} y1={yv} x2={padL + chart3Data.length * (barW + barGap)} y2={yv} stroke="rgba(255,255,255,0.05)" strokeWidth="1" />
-                              <text x={padL - 2} y={yv + 4} textAnchor="end" style={{ fontFamily: 'Share Tech Mono, monospace', fontSize: 7, fill: '#526080' }}>{secondFmt(Math.round(maxVal3 * v))}</text>
+                              <line x1={padL} y1={yv} x2={padL + chart3Data.length * (barW + barGap)} y2={yv} stroke="rgba(0,0,0,0.04)" strokeWidth="1" />
+                              <text x={padL - 2} y={yv + 4} textAnchor="end" style={{ fontFamily: 'Share Tech Mono, monospace', fontSize: 7, fill: '#8a8a8a' }}>{secondFmt(Math.round(maxVal3 * v))}</text>
                             </g>
                           )
                         })}
@@ -881,17 +881,17 @@ export default function Argus() {
                           return (
                             <g key={`${c.id}-${secondMetric}`} style={{ cursor: 'pointer' }}
                               onClick={() => { setSelected(c.id) }}
-                              onMouseEnter={e => showTip(e, [c.name, `${secondLabel}: ${secondFmt(secondVal(c))}`, `Риск: ${riskLabel(c.risk)} (${c.risk})`])}
+                              onMouseEnter={e => showTip(e, [c.name, `${secondLabel}: ${secondFmt(secondVal(c))}`, `Р РёСЃРє: ${riskLabel(c.risk)} (${c.risk})`])}
                               onMouseMove={moveTip} onMouseLeave={hideTip}>
                               <rect x={bx} y={chartH - bh} width={barW} height={bh} fill={col}
                                 opacity={isSel ? 1 : 0.78} rx="2"
-                                style={{ transformBox: 'fill-box', transformOrigin: '50% 100%', animation: 'bar-grow 400ms ease forwards', filter: isSel ? `drop-shadow(0 0 8px ${col})` : undefined }} />
+                                style={{ transformBox: 'fill-box', transformOrigin: '50% 100%', animation: 'bar-grow 400ms ease forwards' }} />
                               <text x={bx + barW / 2} y={chartH - bh - 4} textAnchor="middle" style={{ fontFamily: 'Share Tech Mono, monospace', fontSize: 9, fill: col, fontWeight: 700 }}>{secondFmt(secondVal(c))}</text>
-                              <text x={bx + barW / 2} y={chartH + 14} textAnchor="middle" style={{ fontFamily: 'Inter, sans-serif', fontSize: 8, fill: isSel ? '#E8EDF5' : '#8A9BBF' }}>{c.name.split(' ')[0].slice(0, 10)}</text>
+                              <text x={bx + barW / 2} y={chartH + 14} textAnchor="middle" style={{ fontFamily: 'Inter, sans-serif', fontSize: 8, fill: isSel ? '#0a0a0a' : '#3a3a3a' }}>{c.name.split(' ')[0].slice(0, 10)}</text>
                             </g>
                           )
                         })}
-                        <line x1={padL} y1={chartH} x2={padL + chart3Data.length * (barW + barGap)} y2={chartH} stroke="rgba(46,174,232,0.2)" strokeWidth="1" />
+                        <line x1={padL} y1={chartH} x2={padL + chart3Data.length * (barW + barGap)} y2={chartH} stroke="rgba(0,0,0,0.2)" strokeWidth="1" />
                       </svg>
                     </div>
                   </div>
@@ -899,22 +899,22 @@ export default function Argus() {
                   {/* Summary cards */}
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 12, marginTop: 16 }}>
                     {[
-                      { label: 'НИЗКИЙ РИСК', filter: 'НИЗКИЕ', count: analyticCompanies.filter(c => c.risk < 20).length, total: COMPANIES.filter(c => c.risk < 20).length, color: '#2EAEE8', range: '0–19' },
-                      { label: 'СРЕДНИЙ РИСК', filter: 'СРЕДНИЕ', count: analyticCompanies.filter(c => c.risk >= 20 && c.risk < 40).length, total: COMPANIES.filter(c => c.risk >= 20 && c.risk < 40).length, color: '#C9A84C', range: '20–39' },
-                      { label: 'ВЫСОКИЙ РИСК', filter: 'ВЫСОКИЕ', count: analyticCompanies.filter(c => c.risk >= 40 && c.risk < 70).length, total: COMPANIES.filter(c => c.risk >= 40 && c.risk < 70).length, color: '#E07B39', range: '40–69' },
-                      { label: 'КРИТИЧНЫЙ', filter: 'КРИТИЧНЫЕ', count: analyticCompanies.filter(c => c.risk >= 70).length, total: COMPANIES.filter(c => c.risk >= 70).length, color: '#D94040', range: '70–100' },
+                      { label: 'РќРР—РљРР™ Р РРЎРљ', filter: 'РќРР—РљРР•', count: analyticCompanies.filter(c => c.risk < 20).length, total: COMPANIES.filter(c => c.risk < 20).length, color: '#0a0a0a', range: '0вЂ“19' },
+                      { label: 'РЎР Р•Р”РќРР™ Р РРЎРљ', filter: 'РЎР Р•Р”РќРР•', count: analyticCompanies.filter(c => c.risk >= 20 && c.risk < 40).length, total: COMPANIES.filter(c => c.risk >= 20 && c.risk < 40).length, color: '#5a5a5a', range: '20вЂ“39' },
+                      { label: 'Р’Р«РЎРћРљРР™ Р РРЎРљ', filter: 'Р’Р«РЎРћРљРР•', count: analyticCompanies.filter(c => c.risk >= 40 && c.risk < 70).length, total: COMPANIES.filter(c => c.risk >= 40 && c.risk < 70).length, color: '#888888', range: '40вЂ“69' },
+                      { label: 'РљР РРўРР§РќР«Р™', filter: 'РљР РРўРР§РќР«Р•', count: analyticCompanies.filter(c => c.risk >= 70).length, total: COMPANIES.filter(c => c.risk >= 70).length, color: '#0a0a0a', range: '70вЂ“100' },
                     ].map(s => {
                       const isActive = riskFilter === s.filter
                       return (
-                        <div key={s.label} onClick={() => setRiskFilter(isActive ? 'Все' : s.filter)}
+                        <div key={s.label} onClick={() => setRiskFilter(isActive ? 'Р’СЃРµ' : s.filter)}
                           style={{ background: 'var(--bg-card)', border: '1px solid ' + (isActive ? s.color : s.color + '22'), borderRadius: 8, padding: '16px 18px', position: 'relative', overflow: 'hidden', cursor: 'pointer', transition: 'all 200ms', boxShadow: isActive ? `0 0 16px ${s.color}22` : 'none' }}
                           onMouseEnter={e => (e.currentTarget as HTMLElement).style.borderColor = s.color + '66'}
                           onMouseLeave={e => (e.currentTarget as HTMLElement).style.borderColor = isActive ? s.color : s.color + '22'}>
                           <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2, background: s.color }} />
                           {isActive && <div style={{ position: 'absolute', inset: 0, background: s.color, opacity: 0.04, pointerEvents: 'none' }} />}
                           <div style={{ fontFamily: 'Orbitron, monospace', fontWeight: 900, fontSize: '2rem', color: s.color, marginBottom: 4 }}>{s.count}</div>
-                          <div style={{ fontFamily: 'Share Tech Mono, monospace', fontSize: '0.58rem', color: isActive ? s.color : '#526080', letterSpacing: '0.1em' }}>{s.label}</div>
-                          <div style={{ fontFamily: 'Share Tech Mono, monospace', fontSize: '0.52rem', color: s.color, marginTop: 4, opacity: 0.7 }}>{s.range} · {s.total} всего</div>
+                          <div style={{ fontFamily: 'Share Tech Mono, monospace', fontSize: '0.58rem', color: isActive ? s.color : '#8a8a8a', letterSpacing: '0.1em' }}>{s.label}</div>
+                          <div style={{ fontFamily: 'Share Tech Mono, monospace', fontSize: '0.52rem', color: s.color, marginTop: 4, opacity: 0.7 }}>{s.range} В· {s.total} РІСЃРµРіРѕ</div>
                           <div style={{ position: 'absolute', right: 12, bottom: 10, width: 40, height: 40, borderRadius: '50%', background: s.color, opacity: isActive ? 0.12 : 0.06, transition: 'opacity 200ms', pointerEvents: 'none' }} />
                         </div>
                       )
@@ -931,3 +931,5 @@ export default function Argus() {
     </div>
   )
                                 }
+
+

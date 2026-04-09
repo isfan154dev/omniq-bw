@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
+﻿import { useState, useEffect, useCallback } from 'react'
 import { useLanguage } from '../context/LanguageContext'
 import { useModal } from '../context/ModalContext'
 
@@ -92,7 +92,7 @@ export default function Pitch() {
             className="btn-ghost"
             style={{ fontSize: '0.65rem', padding: '8px 20px', opacity: slide === 1 ? 0.3 : 1 }}
           >
-            ← {t('pitch_prev')}
+            в†ђ {t('pitch_prev')}
           </button>
           <button
             onClick={next}
@@ -100,7 +100,7 @@ export default function Pitch() {
             className="btn-primary"
             style={{ fontSize: '0.65rem', padding: '8px 20px', opacity: slide === TOTAL_SLIDES ? 0.3 : 1 }}
           >
-            {t('pitch_next')} →
+            {t('pitch_next')} в†’
           </button>
         </div>
       </div>
@@ -144,7 +144,7 @@ function SlideContainer({ slide, t, openAccess, openDemo }: SlideContainerProps)
   )
 }
 
-/* ── Slide helpers ── */
+/* в”Ђв”Ђ Slide helpers в”Ђв”Ђ */
 
 function SlideWrap({ children, align = 'center' }: { children: React.ReactNode; align?: 'center' | 'left' }) {
   return (
@@ -172,9 +172,9 @@ function SLabel({ children }: { children: React.ReactNode }) {
 
 function STitle({ children, gradient = 'cyan' }: { children: React.ReactNode; gradient?: 'cyan' | 'purple' | 'green' }) {
   const gradMap = {
-    cyan: 'linear-gradient(135deg, #ffffff 0%, #e8eaf6 40%, #00d4ff 100%)',
-    purple: 'linear-gradient(135deg, #ffffff 0%, #c4b5fd 40%, #7b2fff 100%)',
-    green: 'linear-gradient(135deg, #ffffff 0%, #bbf7d0 40%, #00ff88 100%)',
+    cyan: 'linear-gradient(135deg, #ffffff 0%, #efefed 40%, #0a0a0a 100%)',
+    purple: 'linear-gradient(135deg, #ffffff 0%, #d4d4d0 40%, #2a2a2a 100%)',
+    green: 'linear-gradient(135deg, #ffffff 0%, #e8e8e6 40%, #3a3a3a 100%)',
   }
   return (
     <h2
@@ -195,7 +195,7 @@ function STitle({ children, gradient = 'cyan' }: { children: React.ReactNode; gr
   )
 }
 
-function StatBox({ value, label, accent = '#00d4ff' }: { value: string; label: string; accent?: string }) {
+function StatBox({ value, label, accent = '#0a0a0a' }: { value: string; label: string; accent?: string }) {
   return (
     <div
       style={{
@@ -212,7 +212,7 @@ function StatBox({ value, label, accent = '#00d4ff' }: { value: string; label: s
           fontWeight: 900,
           fontSize: 'clamp(1.4rem, 3vw, 2rem)',
           color: accent,
-          textShadow: `0 0 16px ${accent}55`,
+          textShadow: 'none',
           lineHeight: 1.1,
           marginBottom: 6,
         }}
@@ -226,7 +226,7 @@ function StatBox({ value, label, accent = '#00d4ff' }: { value: string; label: s
   )
 }
 
-/* ── Individual Slides ── */
+/* в”Ђв”Ђ Individual Slides в”Ђв”Ђ */
 
 function Slide1({ t }: { t: TFunc }) {
   return (
@@ -239,9 +239,9 @@ function Slide1({ t }: { t: TFunc }) {
           letterSpacing: '0.2em',
           color: 'var(--accent-cyan)',
           padding: '4px 14px',
-          border: '1px solid rgba(0,212,255,0.3)',
+          border: '1px solid rgba(0,0,0,0.3)',
           borderRadius: 'var(--radius-pill)',
-          background: 'rgba(0,212,255,0.06)',
+          background: 'rgba(0,0,0,0.06)',
           marginBottom: 28,
         }}
       >
@@ -267,7 +267,7 @@ function Slide1({ t }: { t: TFunc }) {
           fontFamily: 'Orbitron, monospace',
           fontWeight: 900,
           fontSize: 'clamp(2.5rem, 6vw, 5rem)',
-          background: 'linear-gradient(135deg, #7b2fff 0%, #00d4ff 60%, #00ff88 100%)',
+          background: 'linear-gradient(135deg, #2a2a2a 0%, #0a0a0a 60%, #3a3a3a 100%)',
           WebkitBackgroundClip: 'text',
           WebkitTextFillColor: 'transparent',
           backgroundClip: 'text',
@@ -295,7 +295,7 @@ function Slide1({ t }: { t: TFunc }) {
           fontFamily: 'Share Tech Mono, monospace',
           fontSize: '0.65rem',
           letterSpacing: '0.15em',
-          color: 'var(--accent-green)',
+          color: 'var(--accent-teal)',
         }}
       >
         {t('pitch_s1_version')}
@@ -321,9 +321,9 @@ function Slide2({ t }: { t: TFunc }) {
         }}
       >
         {[
-          { title: t('pitch_s2_p1_title'), text: t('pitch_s2_p1_text'), accent: '#ff6b35' },
-          { title: t('pitch_s2_p2_title'), text: t('pitch_s2_p2_text'), accent: '#ff6b35' },
-          { title: t('pitch_s2_p3_title'), text: t('pitch_s2_p3_text'), accent: '#ff2d55' },
+          { title: t('pitch_s2_p1_title'), text: t('pitch_s2_p1_text'), accent: '#5a5a5a' },
+          { title: t('pitch_s2_p2_title'), text: t('pitch_s2_p2_text'), accent: '#5a5a5a' },
+          { title: t('pitch_s2_p3_title'), text: t('pitch_s2_p3_text'), accent: '#0a0a0a' },
         ].map((item, i) => (
           <div
             key={i}
@@ -361,9 +361,9 @@ function Slide2({ t }: { t: TFunc }) {
           flexWrap: 'wrap',
         }}
       >
-        <StatBox value={t('pitch_s2_stat1')} label={t('pitch_s2_stat1_l')} accent="#ff2d55" />
-        <StatBox value={t('pitch_s2_stat2')} label={t('pitch_s2_stat2_l')} accent="#ff6b35" />
-        <StatBox value={t('pitch_s2_stat3')} label={t('pitch_s2_stat3_l')} accent="#ff6b35" />
+        <StatBox value={t('pitch_s2_stat1')} label={t('pitch_s2_stat1_l')} accent="#0a0a0a" />
+        <StatBox value={t('pitch_s2_stat2')} label={t('pitch_s2_stat2_l')} accent="#5a5a5a" />
+        <StatBox value={t('pitch_s2_stat3')} label={t('pitch_s2_stat3_l')} accent="#5a5a5a" />
       </div>
     </SlideWrap>
   )
@@ -397,18 +397,18 @@ function Slide3({ t }: { t: TFunc }) {
         }}
       >
         {[
-          { text: t('pitch_s3_f1'), icon: '⬡' },
-          { text: t('pitch_s3_f2'), icon: '⚡' },
-          { text: t('pitch_s3_f3'), icon: '◈' },
-          { text: t('pitch_s3_f4'), icon: '✦' },
+          { text: t('pitch_s3_f1'), icon: 'в¬Ў' },
+          { text: t('pitch_s3_f2'), icon: 'вљЎ' },
+          { text: t('pitch_s3_f3'), icon: 'в—€' },
+          { text: t('pitch_s3_f4'), icon: 'вњ¦' },
         ].map((item, i) => (
           <div
             key={i}
             style={{
               padding: '20px 16px',
-              border: '1px solid rgba(0,212,255,0.2)',
+              border: '1px solid rgba(0,0,0,0.2)',
               borderRadius: 'var(--radius-md)',
-              background: 'rgba(0,212,255,0.04)',
+              background: 'rgba(0,0,0,0.04)',
               textAlign: 'left',
               display: 'flex',
               gap: 12,
@@ -440,9 +440,9 @@ function Slide4({ t }: { t: TFunc }) {
         }}
       >
         {[
-          { name: 'ARGUS', color: '#7b2fff', icon: '◈', desc: t('pitch_s4_argus_desc') },
-          { name: 'NEXUS', color: '#00d4ff', icon: '⬡', desc: t('pitch_s4_nexus_desc') },
-          { name: 'AURORA', color: '#00ff88', icon: '✦', desc: t('pitch_s4_aurora_desc') },
+          { name: 'ARGUS', color: '#2a2a2a', icon: 'в—€', desc: t('pitch_s4_argus_desc') },
+          { name: 'NEXUS', color: '#0a0a0a', icon: 'в¬Ў', desc: t('pitch_s4_nexus_desc') },
+          { name: 'AURORA', color: '#3a3a3a', icon: 'вњ¦', desc: t('pitch_s4_aurora_desc') },
         ].map(item => (
           <div
             key={item.name}
@@ -462,7 +462,7 @@ function Slide4({ t }: { t: TFunc }) {
                   fontWeight: 900,
                   fontSize: '1rem',
                   color: item.color,
-                  textShadow: `0 0 12px ${item.color}55`,
+                  textShadow: 'none',
                 }}
               >
                 {item.name}
@@ -493,12 +493,12 @@ function Slide5({ t }: { t: TFunc }) {
           margin: '0 auto 28px',
         }}
       >
-        <StatBox value={t('pitch_s5_gdp')} label={t('pitch_s5_gdp_l')} accent="#00ff88" />
-        <StatBox value={t('pitch_s5_pop')} label={t('pitch_s5_pop_l')} accent="#00ff88" />
-        <StatBox value={t('pitch_s5_it')} label={t('pitch_s5_it_l')} accent="#00d4ff" />
-        <StatBox value={t('pitch_s5_growth')} label={t('pitch_s5_growth_l')} accent="#00d4ff" />
-        <StatBox value={t('pitch_s5_gov')} label={t('pitch_s5_gov_l')} accent="#7b2fff" />
-        <StatBox value={t('pitch_s5_prog')} label={t('pitch_s5_prog_l')} accent="#7b2fff" />
+        <StatBox value={t('pitch_s5_gdp')} label={t('pitch_s5_gdp_l')} accent="#3a3a3a" />
+        <StatBox value={t('pitch_s5_pop')} label={t('pitch_s5_pop_l')} accent="#3a3a3a" />
+        <StatBox value={t('pitch_s5_it')} label={t('pitch_s5_it_l')} accent="#0a0a0a" />
+        <StatBox value={t('pitch_s5_growth')} label={t('pitch_s5_growth_l')} accent="#0a0a0a" />
+        <StatBox value={t('pitch_s5_gov')} label={t('pitch_s5_gov_l')} accent="#2a2a2a" />
+        <StatBox value={t('pitch_s5_prog')} label={t('pitch_s5_prog_l')} accent="#2a2a2a" />
       </div>
 
       <div
@@ -512,9 +512,9 @@ function Slide5({ t }: { t: TFunc }) {
         }}
       >
         {[
-          { value: t('pitch_s5_tam'), label: t('pitch_s5_tam_l'), accent: '#ff6b35' },
-          { value: t('pitch_s5_sam'), label: t('pitch_s5_sam_l'), accent: '#00d4ff' },
-          { value: t('pitch_s5_som'), label: t('pitch_s5_som_l'), accent: '#00ff88' },
+          { value: t('pitch_s5_tam'), label: t('pitch_s5_tam_l'), accent: '#5a5a5a' },
+          { value: t('pitch_s5_sam'), label: t('pitch_s5_sam_l'), accent: '#0a0a0a' },
+          { value: t('pitch_s5_som'), label: t('pitch_s5_som_l'), accent: '#3a3a3a' },
         ].map((item, i) => (
           <div
             key={i}
@@ -533,7 +533,7 @@ function Slide5({ t }: { t: TFunc }) {
                 fontWeight: 900,
                 fontSize: 'clamp(1.2rem, 2.5vw, 1.6rem)',
                 color: item.accent,
-                textShadow: `0 0 12px ${item.accent}44`,
+                textShadow: 'none',
                 marginBottom: 6,
               }}
             >
@@ -570,21 +570,21 @@ function Slide6({ t }: { t: TFunc }) {
             text: t('pitch_s6_uc1_text'),
             stat: t('pitch_s6_uc1_stat'),
             statL: t('pitch_s6_uc1_stat_l'),
-            accent: '#00d4ff',
+            accent: '#0a0a0a',
           },
           {
             title: t('pitch_s6_uc2_title'),
             text: t('pitch_s6_uc2_text'),
             stat: t('pitch_s6_uc2_stat'),
             statL: t('pitch_s6_uc2_stat_l'),
-            accent: '#00ff88',
+            accent: '#3a3a3a',
           },
           {
             title: t('pitch_s6_uc3_title'),
             text: t('pitch_s6_uc3_text'),
             stat: t('pitch_s6_uc3_stat'),
             statL: t('pitch_s6_uc3_stat_l'),
-            accent: '#7b2fff',
+            accent: '#2a2a2a',
           },
         ].map((item, i) => (
           <div
@@ -621,7 +621,7 @@ function Slide6({ t }: { t: TFunc }) {
                   fontWeight: 900,
                   fontSize: '1.4rem',
                   color: item.accent,
-                  textShadow: `0 0 12px ${item.accent}55`,
+                  textShadow: 'none',
                   lineHeight: 1,
                   marginBottom: 4,
                 }}
@@ -656,9 +656,9 @@ function Slide7({ t }: { t: TFunc }) {
         }}
       >
         {[
-          { title: t('pitch_s7_r1_title'), text: t('pitch_s7_r1_text'), accent: '#00d4ff' },
-          { title: t('pitch_s7_r2_title'), text: t('pitch_s7_r2_text'), accent: '#7b2fff' },
-          { title: t('pitch_s7_r3_title'), text: t('pitch_s7_r3_text'), accent: '#00ff88' },
+          { title: t('pitch_s7_r1_title'), text: t('pitch_s7_r1_text'), accent: '#0a0a0a' },
+          { title: t('pitch_s7_r2_title'), text: t('pitch_s7_r2_text'), accent: '#2a2a2a' },
+          { title: t('pitch_s7_r3_title'), text: t('pitch_s7_r3_text'), accent: '#3a3a3a' },
         ].map((item, i) => (
           <div
             key={i}
@@ -689,9 +689,9 @@ function Slide7({ t }: { t: TFunc }) {
       </div>
 
       <div style={{ display: 'flex', gap: 24, justifyContent: 'center', flexWrap: 'wrap' }}>
-        <StatBox value={t('pitch_s7_acv')} label={t('pitch_s7_acv_l')} accent="#00d4ff" />
-        <StatBox value={t('pitch_s7_margin')} label={t('pitch_s7_margin_l')} accent="#00ff88" />
-        <StatBox value={t('pitch_s7_contract')} label={t('pitch_s7_contract_l')} accent="#7b2fff" />
+        <StatBox value={t('pitch_s7_acv')} label={t('pitch_s7_acv_l')} accent="#0a0a0a" />
+        <StatBox value={t('pitch_s7_margin')} label={t('pitch_s7_margin_l')} accent="#3a3a3a" />
+        <StatBox value={t('pitch_s7_contract')} label={t('pitch_s7_contract_l')} accent="#2a2a2a" />
       </div>
     </SlideWrap>
   )
@@ -707,7 +707,7 @@ function Slide8({ t, openAccess, openDemo }: { t: TFunc; openAccess: () => void;
           fontFamily: 'Orbitron, monospace',
           fontWeight: 900,
           fontSize: 'clamp(1.8rem, 4vw, 3rem)',
-          background: 'linear-gradient(135deg, #7b2fff 0%, #00d4ff 60%, #00ff88 100%)',
+          background: 'linear-gradient(135deg, #2a2a2a 0%, #0a0a0a 60%, #3a3a3a 100%)',
           WebkitBackgroundClip: 'text',
           WebkitTextFillColor: 'transparent',
           backgroundClip: 'text',
@@ -731,10 +731,10 @@ function Slide8({ t, openAccess, openDemo }: { t: TFunc; openAccess: () => void;
 
       <div style={{ display: 'flex', gap: 14, justifyContent: 'center', flexWrap: 'wrap', marginBottom: 48 }}>
         <button onClick={openAccess} className="btn-primary" style={{ fontSize: '0.75rem', padding: '13px 32px' }}>
-          <span>◈</span> {t('pitch_s8_cta')}
+          <span>в—€</span> {t('pitch_s8_cta')}
         </button>
         <button onClick={openDemo} className="btn-ghost" style={{ fontSize: '0.75rem', padding: '12px 32px' }}>
-          <span>▶</span> {t('pitch_s8_demo')}
+          <span>в–¶</span> {t('pitch_s8_demo')}
         </button>
       </div>
 
@@ -748,8 +748,8 @@ function Slide8({ t, openAccess, openDemo }: { t: TFunc; openAccess: () => void;
         }}
       >
         {[
-          { icon: '✉', label: t('pitch_s8_email') },
-          { icon: '◉', label: t('pitch_s8_location') },
+          { icon: 'вњ‰', label: t('pitch_s8_email') },
+          { icon: 'в—‰', label: t('pitch_s8_location') },
         ].map((item, i) => (
           <div
             key={i}
@@ -783,3 +783,5 @@ function Slide8({ t, openAccess, openDemo }: { t: TFunc; openAccess: () => void;
     </SlideWrap>
   )
 }
+
+

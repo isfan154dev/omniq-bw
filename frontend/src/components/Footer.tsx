@@ -39,8 +39,8 @@ export default function Footer() {
           position: 'absolute',
           inset: 0,
           backgroundImage: `
-            linear-gradient(rgba(0, 212, 255, 0.03) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(0, 212, 255, 0.03) 1px, transparent 1px)
+            linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px)
           `,
           backgroundSize: '30px 30px',
           pointerEvents: 'none',
@@ -64,12 +64,11 @@ export default function Footer() {
                 style={{
                   width: 32,
                   height: 32,
-                  background: 'linear-gradient(135deg, #00d4ff, #7b2fff)',
+                  background: 'linear-gradient(135deg, #0a0a0a, #2a2a2a)',
                   borderRadius: 6,
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  boxShadow: '0 0 12px rgba(0, 212, 255, 0.3)',
                   flexShrink: 0,
                 }}
               >
@@ -88,8 +87,7 @@ export default function Footer() {
                   fontWeight: 900,
                   fontSize: '1rem',
                   letterSpacing: '0.12em',
-                  color: '#fff',
-                  textShadow: '0 0 16px rgba(0, 212, 255, 0.5)',
+                  color: '#0a0a0a',
                 }}
               >
                 OMNIQ
@@ -143,15 +141,13 @@ export default function Footer() {
                   }}
                   onMouseEnter={e => {
                     const el = e.currentTarget
-                    el.style.borderColor = 'var(--accent-cyan)'
-                    el.style.color = 'var(--accent-cyan)'
-                    el.style.boxShadow = '0 0 10px rgba(0, 212, 255, 0.2)'
+                    el.style.borderColor = '#0a0a0a'
+                    el.style.color = '#0a0a0a'
                   }}
                   onMouseLeave={e => {
                     const el = e.currentTarget
                     el.style.borderColor = 'var(--border-dim)'
                     el.style.color = 'var(--text-muted)'
-                    el.style.boxShadow = 'none'
                   }}
                 >
                   {icon}
@@ -313,7 +309,7 @@ export default function Footer() {
                 style={{
                   fontFamily: 'Share Tech Mono, monospace',
                   fontSize: '0.65rem',
-                  color: 'var(--accent-green)',
+                  color: 'var(--accent-teal)',
                   letterSpacing: '0.1em',
                 }}
               >

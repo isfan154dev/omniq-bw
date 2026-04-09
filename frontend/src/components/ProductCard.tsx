@@ -31,7 +31,7 @@ export default function ProductCard({
     const b = parseInt(hex.slice(5, 7), 16)
     return `${r}, ${g}, ${b}`
   }
-  const rgb = isHex ? rgbFromHex(color) : '0, 212, 255'
+  const rgb = isHex ? rgbFromHex(color) : '0, 0, 0'
 
   return (
     <div
@@ -49,8 +49,8 @@ export default function ProductCard({
         transition: 'all 350ms ease',
         transform: hovered ? 'translateY(-4px)' : 'translateY(0)',
         boxShadow: hovered
-          ? `0 20px 48px rgba(0,0,0,0.4), 0 0 40px rgba(${rgb}, 0.12)`
-          : '0 4px 24px rgba(0,0,0,0.3)',
+          ? '0 20px 48px rgba(0,0,0,0.12)'
+          : '0 4px 24px rgba(0,0,0,0.08)',
         cursor: 'default',
       }}
     >
@@ -104,8 +104,6 @@ export default function ProductCard({
           justifyContent: 'center',
           marginBottom: 20,
           color: color,
-          boxShadow: hovered ? `0 0 16px rgba(${rgb}, 0.3)` : 'none',
-          transition: 'box-shadow 300ms ease',
           fontSize: '1.4rem',
         }}
       >
@@ -120,9 +118,7 @@ export default function ProductCard({
           fontSize: '1.4rem',
           letterSpacing: '0.08em',
           color: color,
-          textShadow: hovered ? `0 0 16px rgba(${rgb}, 0.6)` : 'none',
           marginBottom: 4,
-          transition: 'text-shadow 300ms ease',
         }}
       >
         {name}
@@ -222,12 +218,10 @@ export default function ProductCard({
           onMouseEnter={e => {
             e.currentTarget.style.background = `rgba(${rgb}, 0.12)`
             e.currentTarget.style.borderColor = color
-            e.currentTarget.style.boxShadow = `0 0 16px rgba(${rgb}, 0.2)`
           }}
           onMouseLeave={e => {
             e.currentTarget.style.background = `rgba(${rgb}, 0.05)`
             e.currentTarget.style.borderColor = `rgba(${rgb}, 0.4)`
-            e.currentTarget.style.boxShadow = 'none'
           }}
         >
           EXPLORE {name}
@@ -258,12 +252,10 @@ export default function ProductCard({
           onMouseEnter={e => {
             e.currentTarget.style.background = `rgba(${rgb}, 0.12)`
             e.currentTarget.style.borderColor = color
-            e.currentTarget.style.boxShadow = `0 0 16px rgba(${rgb}, 0.2)`
           }}
           onMouseLeave={e => {
             e.currentTarget.style.background = `rgba(${rgb}, 0.05)`
             e.currentTarget.style.borderColor = `rgba(${rgb}, 0.4)`
-            e.currentTarget.style.boxShadow = 'none'
           }}
         >
           EXPLORE {name}

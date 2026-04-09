@@ -17,22 +17,22 @@ interface Edge {
 
 const NODES: Node[] = [
   // Uzbekistan regions — positioned on viewBox 0 0 600 400
-  { id: 'tsh', label: 'Tashkent',     x: 390, y: 130, type: 'country', color: '#00d4ff' },
-  { id: 'sam', label: 'Samarkand',    x: 280, y: 230, type: 'country', color: '#00d4ff' },
-  { id: 'nam', label: 'Namangan',     x: 450, y: 160, type: 'country', color: '#00d4ff' },
-  { id: 'and', label: 'Andijan',      x: 490, y: 200, type: 'country', color: '#00d4ff' },
-  { id: 'bux', label: 'Bukhara',      x: 175, y: 240, type: 'country', color: '#00d4ff' },
-  { id: 'nuk', label: 'Nukus',        x: 110, y: 155, type: 'country', color: '#00d4ff' },
+  { id: 'tsh', label: 'Tashkent',     x: 390, y: 130, type: 'country', color: '#0a0a0a' },
+  { id: 'sam', label: 'Samarkand',    x: 280, y: 230, type: 'country', color: '#0a0a0a' },
+  { id: 'nam', label: 'Namangan',     x: 450, y: 160, type: 'country', color: '#0a0a0a' },
+  { id: 'and', label: 'Andijan',      x: 490, y: 200, type: 'country', color: '#0a0a0a' },
+  { id: 'bux', label: 'Bukhara',      x: 175, y: 240, type: 'country', color: '#0a0a0a' },
+  { id: 'nuk', label: 'Nukus',        x: 110, y: 155, type: 'country', color: '#0a0a0a' },
   // Gov hubs
-  { id: 'h1', label: 'OMNIQ Hub',     x: 310, y: 175, type: 'hub',     color: '#7b2fff' },
-  { id: 'h2', label: 'my.gov.uz',     x: 480, y: 290, type: 'hub',     color: '#00ff88' },
-  { id: 'h3', label: 'Soliq/Bojxona', x: 145, y: 310, type: 'hub',     color: '#ff6b35' },
+  { id: 'h1', label: 'OMNIQ Hub',     x: 310, y: 175, type: 'hub',     color: '#2a2a2a' },
+  { id: 'h2', label: 'my.gov.uz',     x: 480, y: 290, type: 'hub',     color: '#3a3a3a' },
+  { id: 'h3', label: 'Soliq/Bojxona', x: 145, y: 310, type: 'hub',     color: '#5a5a5a' },
   // Data nodes (ESEDO, MinFin, CBU)
-  { id: 'd1', label: '',              x: 250, y: 120, type: 'data',    color: '#00d4ff' },
-  { id: 'd2', label: '',              x: 420, y: 310, type: 'data',    color: '#7b2fff' },
-  { id: 'd3', label: '',              x: 100, y: 260, type: 'data',    color: '#00ff88' },
-  { id: 'd4', label: '',              x: 540, y: 240, type: 'data',    color: '#00d4ff' },
-  { id: 'd5', label: '',              x: 200, y: 330, type: 'data',    color: '#7b2fff' },
+  { id: 'd1', label: '',              x: 250, y: 120, type: 'data',    color: '#0a0a0a' },
+  { id: 'd2', label: '',              x: 420, y: 310, type: 'data',    color: '#2a2a2a' },
+  { id: 'd3', label: '',              x: 100, y: 260, type: 'data',    color: '#3a3a3a' },
+  { id: 'd4', label: '',              x: 540, y: 240, type: 'data',    color: '#0a0a0a' },
+  { id: 'd5', label: '',              x: 200, y: 330, type: 'data',    color: '#2a2a2a' },
 ]
 
 const EDGES: Edge[] = [
@@ -86,7 +86,7 @@ export default function GlobeVisualization() {
         border: '1px solid var(--border-glow)',
         borderRadius: 'var(--radius-xl)',
         overflow: 'hidden',
-        boxShadow: '0 8px 40px rgba(0,0,0,0.4), 0 0 60px rgba(0, 212, 255, 0.05)',
+        boxShadow: '0 8px 40px rgba(0,0,0,0.4), 0 0 60px rgba(0, 0, 0, 0.05)',
       }}
     >
       {/* Header */}
@@ -114,12 +114,12 @@ export default function GlobeVisualization() {
         </div>
         <div style={{ display: 'flex', gap: 12 }}>
           {[
-            { label: 'TSH', color: '#00d4ff' },
-            { label: 'SAM', color: '#00d4ff' },
-            { label: 'NAM', color: '#00d4ff' },
-            { label: 'AND', color: '#00d4ff' },
-            { label: 'BUX', color: '#00d4ff' },
-            { label: 'NUK', color: '#00d4ff' },
+            { label: 'TSH', color: '#0a0a0a' },
+            { label: 'SAM', color: '#0a0a0a' },
+            { label: 'NAM', color: '#0a0a0a' },
+            { label: 'AND', color: '#0a0a0a' },
+            { label: 'BUX', color: '#0a0a0a' },
+            { label: 'NUK', color: '#0a0a0a' },
           ].map(c => (
             <span
               key={c.label}
@@ -128,7 +128,7 @@ export default function GlobeVisualization() {
                 fontSize: '0.65rem',
                 letterSpacing: '0.08em',
                 padding: '2px 8px',
-                border: `1px solid rgba(0, 212, 255, 0.2)`,
+                border: `1px solid rgba(0, 0, 0, 0.2)`,
                 borderRadius: '3px',
                 color: c.color,
                 opacity: 0.7,
@@ -149,8 +149,8 @@ export default function GlobeVisualization() {
         {/* Background subtle map silhouette */}
         <defs>
           <radialGradient id="bgGrad" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stopColor="#0d0d1a" stopOpacity="1"/>
-            <stop offset="100%" stopColor="#050508" stopOpacity="1"/>
+            <stop offset="0%" stopColor="#ffffff" stopOpacity="1"/>
+            <stop offset="100%" stopColor="#efefed" stopOpacity="1"/>
           </radialGradient>
           <filter id="glow-cyan">
             <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
@@ -168,10 +168,10 @@ export default function GlobeVisualization() {
           </filter>
           {/* Animated dash for active edges */}
           <marker id="arrowCyan" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
-            <path d="M0,1 L5,3 L0,5" fill="none" stroke="#00d4ff" strokeWidth="1"/>
+            <path d="M0,1 L5,3 L0,5" fill="none" stroke="#0a0a0a" strokeWidth="1"/>
           </marker>
           <marker id="arrowPurple" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
-            <path d="M0,1 L5,3 L0,5" fill="none" stroke="#7b2fff" strokeWidth="1"/>
+            <path d="M0,1 L5,3 L0,5" fill="none" stroke="#2a2a2a" strokeWidth="1"/>
           </marker>
         </defs>
 
@@ -183,7 +183,7 @@ export default function GlobeVisualization() {
             key={`hg-${i}`}
             x1={0} y1={(viewH / 12) * i}
             x2={viewW} y2={(viewH / 12) * i}
-            stroke="rgba(0,212,255,0.04)" strokeWidth="1"
+            stroke="rgba(0,0,0,0.04)" strokeWidth="1"
           />
         ))}
         {Array.from({ length: 16 }).map((_, i) => (
@@ -191,7 +191,7 @@ export default function GlobeVisualization() {
             key={`vg-${i}`}
             x1={(viewW / 16) * i} y1={0}
             x2={(viewW / 16) * i} y2={viewH}
-            stroke="rgba(0,212,255,0.04)" strokeWidth="1"
+            stroke="rgba(0,0,0,0.04)" strokeWidth="1"
           />
         ))}
 
@@ -205,7 +205,7 @@ export default function GlobeVisualization() {
               key={`${edge.from}-${edge.to}`}
               x1={a.x} y1={a.y}
               x2={b.x} y2={b.y}
-              stroke={isHighlighted ? '#00d4ff' : 'rgba(0,212,255,0.15)'}
+              stroke={isHighlighted ? '#0a0a0a' : 'rgba(0,0,0,0.15)'}
               strokeWidth={isHighlighted ? 1.5 : 0.75}
               strokeDasharray={edge.active ? 'none' : '4 3'}
               opacity={isHighlighted ? 1 : 0.6}
@@ -225,7 +225,7 @@ export default function GlobeVisualization() {
               cy={node.y}
               r={18 * scale}
               fill="none"
-              stroke="#00d4ff"
+              stroke="#0a0a0a"
               strokeWidth="0.5"
               opacity={0.15 * (1 - scale * 0.3)}
             />
@@ -256,10 +256,10 @@ export default function GlobeVisualization() {
                 cy={node.y}
                 r={r}
                 fill={isCountry
-                  ? 'rgba(0, 212, 255, 0.15)'
+                  ? 'rgba(0, 0, 0, 0.15)'
                   : isHub
-                    ? 'rgba(123, 47, 255, 0.2)'
-                    : `rgba(0, 212, 255, 0.08)`}
+                    ? 'rgba(0, 0, 0, 0.2)'
+                    : `rgba(0, 0, 0, 0.08)`}
                 stroke={node.color}
                 strokeWidth={isCountry ? 1.5 : 1}
               />
@@ -298,7 +298,7 @@ export default function GlobeVisualization() {
               cx={px}
               cy={py}
               r={3}
-              fill="#00d4ff"
+              fill="#0a0a0a"
               opacity={0.9}
               filter="url(#glow-cyan)"
             />
@@ -317,10 +317,10 @@ export default function GlobeVisualization() {
         }}
       >
         {[
-          { color: '#00d4ff', label: 'Region Node' },
-          { color: '#7b2fff', label: 'OMNIQ Hub' },
-          { color: '#00ff88', label: 'my.gov.uz' },
-          { color: '#ff6b35', label: 'Soliq / Bojxona' },
+          { color: '#0a0a0a', label: 'Region Node' },
+          { color: '#2a2a2a', label: 'OMNIQ Hub' },
+          { color: '#3a3a3a', label: 'my.gov.uz' },
+          { color: '#5a5a5a', label: 'Soliq / Bojxona' },
         ].map(item => (
           <div key={item.label} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
             <div
@@ -329,7 +329,6 @@ export default function GlobeVisualization() {
                 height: 8,
                 borderRadius: '50%',
                 background: item.color,
-                boxShadow: `0 0 6px ${item.color}`,
               }}
             />
             <span
