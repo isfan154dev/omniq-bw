@@ -1,0 +1,160 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap');
+
+:root {
+  /* ── Corporate Navy palette ───────────────────── */
+  --bg-primary:     #ffffff;
+  --bg-secondary:   #f5f5f3;
+  --bg-card:        #efefed;
+  --bg-card-hover:  #e8e8e6;
+
+  /* ── Brand colours ───────────────────────────── */
+  --accent-cyan:    #0a0a0a;
+  --accent-blue:    #2a2a2a;
+  --accent-teal:    #3a3a3a;
+  --accent-gold:    #5a5a5a;
+  --accent-purple:  #2a2a2a;
+
+  /* ── Text ────────────────────────────────────── */
+  --text-primary:   #0a0a0a;
+  --text-secondary: #3a3a3a;
+  --text-muted:     #8a8a8a;
+
+  /* ── Borders ─────────────────────────────────── */
+  --border-dim:     rgba(0, 0, 0, 0.08);
+  --border-mid:     rgba(0, 0, 0, 0.16);
+  --border-strong:  rgba(0, 0, 0, 0.32);
+
+  /* ── Status / Risk ───────────────────────────── */
+  --risk-low:       #2a2a2a;
+  --risk-medium:    #5a5a5a;
+  --risk-high:      #888888;
+  --risk-critical:  #0a0a0a;
+
+  /* ── Typography ──────────────────────────────── */
+  --font-primary:   'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display:   'Courier New', monospace;
+  --font-mono:      'Courier New', monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-primary);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-secondary); }
+::-webkit-scrollbar-thumb { background: #8a8a8a; border-radius: 3px; }
+
+/* Selection */
+::selection { background: rgba(0,0,0,0.12); color: #0a0a0a; }
+
+/* Status dot */
+.status-dot {
+  display: inline-block;
+  width: 7px; height: 7px;
+  background: #0a0a0a;
+  border-radius: 50%;
+  animation: pulse-dot 2.5s ease-in-out infinite;
+}
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+/* Utility */
+.container { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
+
+/* Gradient text */
+.gradient-text {
+  color: #0a0a0a;
+}
+
+/* Card base */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-dim);
+  border-radius: 8px;
+  transition: border-color 200ms, transform 200ms;
+}
+.card:hover {
+  border-color: var(--border-mid);
+  transform: translateY(-2px);
+}
+
+/* Buttons */
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 10px 22px;
+  background: #0a0a0a;
+  color: #ffffff;
+  border: none; border-radius: 6px;
+  font-family: var(--font-primary);
+  font-size: 0.875rem; font-weight: 600;
+  cursor: pointer; text-decoration: none;
+  transition: background 200ms, box-shadow 200ms;
+}
+.btn-primary:hover {
+  background: #2a2a2a;
+}
+
+.btn-ghost {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 10px 22px;
+  background: transparent;
+  color: #0a0a0a;
+  border: 1px solid rgba(0,0,0,0.20);
+  border-radius: 6px;
+  font-family: var(--font-primary);
+  font-size: 0.875rem; font-weight: 500;
+  cursor: pointer; text-decoration: none;
+  transition: border-color 200ms, background 200ms;
+}
+.btn-ghost:hover {
+  border-color: #0a0a0a;
+  background: rgba(0,0,0,0.04);
+}
+
+/* Section titles */
+.section-label {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
+  color: #8a8a8a;
+  text-transform: uppercase;
+}
+
+/* Divider */
+.divider { border: none; border-top: 1px solid var(--border-dim); margin: 48px 0; }
+
+/* Risk badges */
+.risk-badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 2px 8px; border-radius: 4px;
+  font-family: var(--font-mono); font-size: 0.6rem;
+  letter-spacing: 0.08em; font-weight: 600;
+}
+.risk-low      { background: rgba(0,0,0,0.06); color: #2a2a2a; }
+.risk-medium   { background: rgba(0,0,0,0.06); color: #5a5a5a; }
+.risk-high     { background: rgba(0,0,0,0.06); color: #888888; }
+.risk-critical { background: rgba(0,0,0,0.10); color: #0a0a0a; }
+
+/* Animations */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in-up { animation: fadeInUp 0.5s ease forwards; }
+
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
